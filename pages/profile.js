@@ -98,23 +98,24 @@ export default function Profile() {
       <Stack align="center" borderRadius="md" w="100%">
         <Avatar size="xl" />
         <Heading>Freddie Wellfair</Heading>
+        <Text>Write something about yourself.</Text>
 
         <Button>Follow</Button>
 
         <HStack w="100%" justifyContent="space-evenly">
-          <Flex w="25%" justifyContent="center">
+          <Flex w="33%" justifyContent="center">
             <Button bg="none" onClick={() => setTab("posts")}>
               1 Post
             </Button>
           </Flex>
 
-          <Flex w="25%" justifyContent="center">
+          <Flex w="33%" justifyContent="center">
             <Button bg="none" onClick={() => setTab("followers")}>
               0 Followers
             </Button>
           </Flex>
 
-          <Flex w="25%" justifyContent="center">
+          <Flex w="33%" justifyContent="center">
             <Button bg="none" onClick={() => setTab("following")}>
               2 Following
             </Button>

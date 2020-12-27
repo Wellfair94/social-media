@@ -42,7 +42,6 @@ const Post = ({ user, upvotes, comments, downvotes, body }) => {
         </Flex>
 
         <IconButton bg="none" size="sm" aria-label="Star" icon={<StarIcon />} />
-        {/* <StarIcon opacity={0.25} _hover={{ cursor: "pointer" }} /> */}
       </Flex>
       <Text fontSize="lg">{body}</Text>
 

@@ -41,7 +41,7 @@ const Login = () => {
         <Stack
           justify="center"
           borderRadius="md"
-          bg="tomato"
+          bg="white"
           w="xs"
           h="xs"
           px={7}
