@@ -4,11 +4,12 @@ const Follower = () => {
   return (
     <Flex
       w="100%"
-      bg="brand.white"
+      bg="white"
       borderRadius="md"
       justifyContent="space-between"
       p={2}
       align="center"
+      boxShadow="sm"
     >
       <Flex align="center">
         <Avatar size="sm" mr={2} />

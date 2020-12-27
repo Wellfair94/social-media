@@ -20,14 +20,16 @@ import {
 import { useState } from "react";
 import Comment from "@/components/Comment";
 
-const Post = () => {
+const Post = ({ user, upvotes, comments, downvotes, body }) => {
   const [open, setOpen] = useState(false);
+
+  const { username, avatarUrl } = user;
 
   return (
     <Stack
       w="100%"
       bg="white"
-      boxShadow="sm"
+      boxShadow="md"
       p={4}
       borderRadius="md"
       spacing={4}
@@ -36,25 +38,27 @@ const Post = () => {
       <Flex align="flex-start" justify="space-between">
         <Flex align="center">
           <Avatar size="sm" mr={2} />
-          <Heading size="md">Freddie Wellfair</Heading>
+          <Heading size="md">{username}</Heading>
         </Flex>
 
         <IconButton bg="none" size="sm" aria-label="Star" icon={<StarIcon />} />
         {/* <StarIcon opacity={0.25} _hover={{ cursor: "pointer" }} /> */}
       </Flex>
-      <Text fontSize="lg">This is an example of the body of a post</Text>
+      <Text fontSize="lg">{body}</Text>
+
+      <Text fontSize="xs">Sat 26 Dec 2020, 22:46</Text>
 
       <Box>
         <Divider my={2} />
         <HStack w="100%" justify="space-between" color="brand.darkGrey">
           <Button w="32%" bg="none">
-            <ArrowUpIcon mr={1} /> 170
+            <ArrowUpIcon mr={1} /> {upvotes}
           </Button>
           <Button w="32%" bg="none" onClick={() => setOpen(!open)}>
-            <ChatIcon mr={1} /> 120
+            <ChatIcon mr={1} /> {comments.length}
           </Button>
           <Button w="32%" bg="none">
-            <ArrowDownIcon mr={1} /> 100
+            <ArrowDownIcon mr={1} /> {downvotes}
           </Button>
         </HStack>
 
@@ -69,7 +73,9 @@ const Post = () => {
               />
             </Flex>
 
-            <Comment />
+            {comments.map(({ id, user, body }) => (
+              <Comment key={id} user={user} body={body} />
+            ))}
           </Stack>
         ) : null}
       </Box>

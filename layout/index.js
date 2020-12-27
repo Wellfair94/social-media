@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   return (
     <>
       <Header />
-      <Container centerContent w="100%" bg="white" py={5}>
+      <Container centerContent w="100%" bg="brand.white" py={5}>
         {children}
       </Container>
     </>

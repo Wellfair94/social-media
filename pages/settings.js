@@ -11,8 +11,8 @@ export default function Settings() {
       </Head>
 
       <Flex align="center" w="100%" textAlign="left">
-        <SettingsIcon size="lg" w={6} h={6} mr={2} />{" "}
-        <Heading>Settings</Heading>
+        <SettingsIcon w={5} h={5} mr={2} />{" "}
+        <Heading fontSize="xl">Settings</Heading>
       </Flex>
 
       <Divider my={5} />
