@@ -1,11 +1,4 @@
-import {
-  HamburgerIcon,
-  SettingsIcon,
-  BellIcon,
-  StarIcon,
-  ExternalLinkIcon,
-  CalendarIcon,
-} from "@chakra-ui/icons";
+import { HamburgerIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Avatar,
   Box,
@@ -23,9 +16,13 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import Link from "next/link";
+import { navLinks } from "@/utils/static";
+import { useRouter } from "next/router";
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const router = useRouter();
+  const { pathname } = router;
 
   return (
     <>
@@ -63,33 +60,18 @@ const Header = () => {
 
             <DrawerBody>
               <Stack mt={4}>
-                <Link href="/">
-                  <Button justifyContent="flex-start" bg="none">
-                    <CalendarIcon mr={2} />
-                    Feed
-                  </Button>
-                </Link>
-
-                <Link href="/profile">
-                  <Button justifyContent="flex-start" bg="none">
-                    <Avatar w="16px" h="16px" bg="brand.darkGrey" mr={2} />
-                    Profile
-                  </Button>
-                </Link>
-
-                <Link href="/starred">
-                  <Button justifyContent="flex-start" bg="none">
-                    <StarIcon mr={2} />
-                    Starred
-                  </Button>
-                </Link>
-
-                <Link href="/settings">
-                  <Button justifyContent="flex-start" bg="none">
-                    <SettingsIcon mr={2} />
-                    Settings
-                  </Button>
-                </Link>
+                {navLinks.map(({ name, icon, route }) => (
+                  <Link href={route} key={name}>
+                    <Button
+                      justifyContent="flex-start"
+                      bg="none"
+                      isActive={route === pathname}
+                    >
+                      {icon}
+                      {name}
+                    </Button>
+                  </Link>
+                ))}
 
                 <Button justifyContent="flex-start" bg="none">
                   <ExternalLinkIcon mr={2} />
