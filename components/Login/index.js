@@ -20,7 +20,7 @@ const Login = () => {
 
   return (
     <Layout>
-      <Modal isOpen={isOpen} onClose={onClose} size="sm" isCentered>
+      <Modal isOpen={isOpen} onClose={onClose} size="xs" isCentered>
         <ModalOverlay />
         <ModalContent>
           <ModalHeader pt={10}>Create account</ModalHeader>
