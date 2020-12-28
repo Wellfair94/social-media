@@ -1,7 +1,6 @@
 import { HamburgerIcon, ExternalLinkIcon } from "@chakra-ui/icons";
 import {
   Avatar,
-  Box,
   Flex,
   IconButton,
   Drawer,
