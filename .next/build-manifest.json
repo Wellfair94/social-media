@@ -33,16 +33,6 @@
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/profile.js"
-    ],
-    "/settings": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/settings.js"
-    ],
-    "/starred": [
-      "static/chunks/main.js",
-      "static/chunks/webpack.js",
-      "static/chunks/pages/starred.js"
     ]
   },
   "ampFirstPages": []

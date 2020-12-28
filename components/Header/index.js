@@ -24,6 +24,8 @@ const Header = () => {
   const router = useRouter();
   const { pathname } = router;
 
+  const isLoggedIn = true;
+
   return (
     <>
       <Flex
@@ -34,16 +36,20 @@ const Header = () => {
         justify="space-between"
         px={4}
       >
-        <IconButton
-          onClick={onOpen}
-          colorScheme="none"
-          aria-label="Menu"
-          icon={<HamburgerIcon w="25px" h="25px" color="brand.white" />}
-        />
+        {isLoggedIn ? (
+          <>
+            <IconButton
+              onClick={onOpen}
+              colorScheme="none"
+              aria-label="Menu"
+              icon={<HamburgerIcon w="25px" h="25px" color="brand.white" />}
+            />
 
-        <Link href="/profile">
-          <Avatar size="sm" _hover={{ cursor: "pointer" }} />
-        </Link>
+            <Link href="/profile">
+              <Avatar size="sm" _hover={{ cursor: "pointer" }} />
+            </Link>
+          </>
+        ) : null}
       </Flex>
 
       <Drawer isOpen={isOpen} placement="left" onClose={onClose}>
