@@ -1,6 +1,17 @@
 import { CalendarIcon, StarIcon, SettingsIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/react";
 
+export const applicationRoles = [
+  {
+    value: 0,
+    label: "User",
+  },
+  {
+    value: 1,
+    label: "Administrator",
+  },
+];
+
 export const navLinks = [
   {
     name: "Feed",

@@ -8,6 +8,10 @@ const UserSchema = new Schema({
     type: String,
     default: uuid(),
   },
+  role: {
+    type: Number,
+    default: 0,
+  },
   email: {
     type: String,
     required: true,
