@@ -6,7 +6,7 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   _id: {
     type: String,
-    default: uuid(),
+    default: uuid,
   },
   role: {
     type: Number,
@@ -36,9 +36,10 @@ const UserSchema = new Schema({
     followers: [String],
     following: [String],
     posts: [String],
+    starred: [String],
   },
 });
 
-const User = mongoose.model("User", UserSchema);
+const User = mongoose.models.User || mongoose.model("User", UserSchema);
 
 export default User;
