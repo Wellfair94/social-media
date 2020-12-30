@@ -1,7 +1,7 @@
 import User from "@/models/User";
 import dbConnect from "@/utils/dbConnect";
 import Joi from "@hapi/joi";
-import bycrypt, { hash } from "bcrypt";
+import bycrypt from "bcrypt";
 
 dbConnect();
 

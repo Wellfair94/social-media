@@ -14,18 +14,26 @@ import { useContext } from "react";
 const LoginForm = ({ onOpen }) => {
   const { login } = useContext(AuthContext);
 
-  // ! Add error handling for login
-  const handleSubmit = (values, actions) => {
-    login(values.username, values.password);
-  };
+  // // ! Add error handling for login
+  // const handleSubmit = (values, actions) => {
+  //   login(values.username, values.password)
+  //     .then(({ session }) => console.log(session))
+  //     .catch((err) => setIsSubmitting(false));
+
+  //   setTimeout(() => {
+  //     setIsSubmitting(false);
+  //   }, 1000);
+  // };
 
   return (
     <Formik
       initialValues={{ username: "", password: "" }}
-      onSubmit={handleSubmit}
+      onSubmit={(values, { setSubmitting }) => {
+        login(values.username, values.password, setSubmitting);
+      }}
     >
-      {({ isSubmitting }) => (
-        <Form>
+      {({ isSubmitting, handleSubmit }) => (
+        <Form onSubmit={handleSubmit}>
           <Stack
             justify="center"
             borderRadius="md"

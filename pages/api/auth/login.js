@@ -26,9 +26,11 @@ export default async (req, res) => {
     if (!validPassword)
       return res.status(400).send("Incorrect username or password");
 
-    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
+      expiresIn: "1h",
+    });
 
-    res.setHeader("auth-token", token);
+    res.setHeader("authorization", token);
     res.send({
       token: token,
       user: user._id,

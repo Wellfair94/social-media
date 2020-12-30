@@ -1,14 +1,15 @@
+import { send } from "micro";
 import jwt from "jsonwebtoken";
 
-export default async (req, res, next) => {
-  const token = req.header("auth-token");
-
-  if (!token) return res.status(401).send("Access Denied");
-
+export default (fn) => async (req, res) => {
   try {
-    const verified = jwt.verify(token, process.env.TOKEN_SECRET);
-    req.user = verified;
+    const decoded = jwt.verify(
+      req.headers.authorization,
+      process.env.TOKEN_SECRET
+    );
+
+    if (decoded) return await fn(req, res);
   } catch (err) {
-    res.status(400).send("Invalid Token");
+    res.status(401).send("Token invalid");
   }
 };

@@ -11,7 +11,9 @@ const AuthProvider = ({ children }) => {
   const router = useRouter();
   const { pathname } = router;
 
-  const login = (username, password) => {
+  console.log(session);
+
+  const login = async (username, password, setSubmitting) => {
     fetch("/api/auth/login", {
       method: "POST",
       headers: {
@@ -20,13 +22,19 @@ const AuthProvider = ({ children }) => {
       body: JSON.stringify({ username: username, password: password }),
     })
       .then((res) => res.json())
-      .then((data) =>
+      .then((data) => {
         setSession({
           isLoggedIn: true,
           user: data,
-        })
-      )
-      .catch((err) => console.log(err));
+        });
+        return "success";
+      })
+      .catch((err) =>
+        setTimeout(() => {
+          setSubmitting(false);
+          console.log(err);
+        }, 1000)
+      );
   };
 
   const logout = () => {
