@@ -69,21 +69,6 @@ const SignUpForm = () => {
               )}
             </Field>
 
-            <Field name="passwordValidation">
-              {({ field, form }) => (
-                <FormControl>
-                  <Input
-                    {...field}
-                    id="passwordValidation"
-                    bg="white"
-                    variant="outline"
-                    placeholder="Re-type password"
-                  />
-                  <FormErrorMessage>{form.errors.name}</FormErrorMessage>
-                </FormControl>
-              )}
-            </Field>
-
             <Button isFullWidth type="submit" isLoading={isSubmitting}>
               Sign Up
             </Button>

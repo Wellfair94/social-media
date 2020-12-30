@@ -17,13 +17,15 @@ import {
 import Link from "next/link";
 import { navLinks } from "@/utils/static";
 import { useRouter } from "next/router";
+import { AuthContext } from "@/contexts/AuthContext";
+import { useContext } from "react";
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { pathname } = router;
-
-  const isLoggedIn = true;
+  const { session, logout } = useContext(AuthContext);
+  const { isLoggedIn } = session;
 
   return (
     <>
@@ -78,7 +80,7 @@ const Header = () => {
                   </Link>
                 ))}
 
-                <Button justifyContent="flex-start" bg="none">
+                <Button justifyContent="flex-start" bg="none" onClick={logout}>
                   <ExternalLinkIcon mr={2} />
                   Logout
                 </Button>

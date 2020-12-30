@@ -8,17 +8,22 @@ import {
   Flex,
   Divider,
 } from "@chakra-ui/react";
+import { AuthContext } from "@/contexts/AuthContext";
+import { useContext } from "react";
 
 const LoginForm = ({ onOpen }) => {
+  const { login } = useContext(AuthContext);
+
+  // ! Add error handling for login
   const handleSubmit = (values, actions) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      actions.setSubmitting(false);
-    }, 1000);
+    login(values.username, values.password);
   };
 
   return (
-    <Formik initialValues={{ email: "", password: "" }} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={{ username: "", password: "" }}
+      onSubmit={handleSubmit}
+    >
       {({ isSubmitting }) => (
         <Form>
           <Stack
@@ -33,16 +38,15 @@ const LoginForm = ({ onOpen }) => {
             boxShadow="md"
             textAlign="center"
           >
-            <Field name="email">
+            <Field name="username">
               {({ field, form }) => (
                 <FormControl>
                   <Input
                     {...field}
                     id="name"
                     bg="white"
-                    type="email"
                     variant="outline"
-                    placeholder="Email"
+                    placeholder="Username"
                   />
                   <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                 </FormControl>

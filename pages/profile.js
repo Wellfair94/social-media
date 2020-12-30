@@ -97,7 +97,7 @@ export default function Profile() {
 
       <Stack align="center" borderRadius="md" w="100%">
         <Avatar size="xl" />
-        <Heading>Freddie Wellfair</Heading>
+        <Heading>Wellfair94</Heading>
         <Text>Write something about yourself.</Text>
 
         <Button>Follow</Button>

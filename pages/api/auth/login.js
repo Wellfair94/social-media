@@ -2,6 +2,7 @@ import dbConnect from "@/utils/dbConnect";
 import Joi from "@hapi/joi";
 import User from "@/models/User";
 import bycrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 dbConnect();
 
@@ -25,7 +26,11 @@ export default async (req, res) => {
     if (!validPassword)
       return res.status(400).send("Incorrect username or password");
 
+    const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
+
+    res.setHeader("auth-token", token);
     res.send({
+      token: token,
       user: user._id,
       username: user.username,
       bio: user.bio,

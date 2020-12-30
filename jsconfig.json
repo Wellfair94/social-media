@@ -6,7 +6,8 @@
       "@/layout": ["layout"],
       "@/models/*": ["models/*"],
       "@/utils/*": ["utils/*"],
-      "@/lib/*": ["lib/*"]
+      "@/lib/*": ["lib/*"],
+      "@/contexts/*": ["contexts/*"]
     }
   }
 }
