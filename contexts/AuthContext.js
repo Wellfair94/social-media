@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
           isLoggedIn: true,
           user: data,
         });
-        return "success";
+        router.push("/");
       })
       .catch((err) =>
         setTimeout(() => {
@@ -43,12 +43,12 @@ const AuthProvider = ({ children }) => {
       user: null,
     });
 
-    router.push("/");
+    router.push("/login");
   };
 
   useEffect(() => {
-    if (pathname !== "/" && !session.user) {
-      router.push("/");
+    if (pathname !== "/login" && !session.user) {
+      router.push("/login");
     }
   }, [pathname]);
 

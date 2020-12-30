@@ -12,9 +12,8 @@ import {
 import LoginForm from "@/components/Forms/LoginForm";
 import SignUpForm from "@/components/Forms/SignUpForm";
 
-const Login = () => {
+export default function Login() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-
   return (
     <Layout>
       <Modal isOpen={isOpen} onClose={onClose} size="xs" isCentered>
@@ -33,6 +32,4 @@ const Login = () => {
       </Flex>
     </Layout>
   );
-};
-
-export default Login;
+}

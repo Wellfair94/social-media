@@ -85,61 +85,72 @@ const posts = [
 
 const feedButtons = ["Hot", "Recent", "Following"];
 
-export default function Home() {
+// export async function getServerSideProps(context) {
+//   const res = await fetch("/api/posts");
+//   const data = await res.json();
+
+//   if (!data) {
+//     return {
+//       notFound: true,
+//     };
+//   }
+
+//   return {
+//     props: {
+//       data: data,
+//     },
+//   };
+// }
+
+export default function Home({ data }) {
   const [feed, setFeed] = useState("Hot");
-  const { session } = useContext(AuthContext);
-  const { isLoggedIn } = session;
+
+  console.log(data);
 
   return (
-    <>
-      {!isLoggedIn ? (
-        <Login />
-      ) : (
-        <Layout>
-          <Head>
-            <title>Create Next App</title>
-          </Head>
-          <Box w="100%">
-            <Flex align="center">
-              <Avatar size="md" mr={2} />
-              <Input
-                variant="outline"
-                bg="white"
-                placeholder="Whats on your mind, Freddie?"
-              />
-            </Flex>
-          </Box>
-          <Divider my={5} />
+    <Layout>
+      <Head>
+        <title>Create Next App</title>
+      </Head>
+      <Box w="100%">
+        <Flex align="center">
+          <Avatar size="md" mr={2} />
+          <Input
+            variant="outline"
+            bg="white"
+            placeholder="Whats on your mind, Freddie?"
+          />
+        </Flex>
+      </Box>
+      <Divider my={5} />
 
-          <HStack justifyContent="flex-start" w="100%" mb={2}>
-            {feedButtons.map((item) => (
-              <Button
-                key={item}
-                borderRadius="full"
-                variant="solid"
-                onClick={() => setFeed(item)}
-                _hover={{ cursor: "pointer" }}
-              >
-                {item}
-              </Button>
-            ))}
-          </HStack>
+      <HStack justifyContent="flex-start" w="100%" mb={2}>
+        {feedButtons.map((item) => (
+          <Button
+            key={item}
+            borderRadius="full"
+            variant="solid"
+            onClick={() => setFeed(item)}
+            _hover={{ cursor: "pointer" }}
+          >
+            {item}
+          </Button>
+        ))}
+      </HStack>
 
-          <Stack w="100%">
-            {posts.map(({ id, user, upvotes, comments, downvotes, body }) => (
-              <Post
-                key={id}
-                user={user}
-                upvotes={upvotes}
-                comments={comments}
-                downvotes={downvotes}
-                body={body}
-              />
-            ))}
-          </Stack>
-          <Button mt={5}>Show more</Button>
-        </Layout>
-      )}
-    </>
+      <Stack w="100%">
+        {posts.map(({ id, user, upvotes, comments, downvotes, body }) => (
+          <Post
+            key={id}
+            user={user}
+            upvotes={upvotes}
+            comments={comments}
+            downvotes={downvotes}
+            body={body}
+          />
+        ))}
+      </Stack>
+      <Button mt={5}>Show more</Button>
+    </Layout>
   );
 }

@@ -1,3 +1,4 @@
+import { string } from "@hapi/joi";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 
@@ -12,17 +13,18 @@ const CommentSchema = new Schema({
     type: Date,
     default: Date.now(),
   },
-  user: {
-    id: String,
-    username: String,
-    avatarUrl: String,
+  postedBy: {
+    type: { user: String, username: String, avatarUrl: String },
+    required: true,
   },
+
   body: {
     type: String,
     required: true,
   },
 });
 
-const Comment = mongoose.model("Comment", CommentSchema);
+const Comment =
+  mongoose.models.Comment || mongoose.model("Comment", CommentSchema);
 
 export default Comment;

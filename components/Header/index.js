@@ -24,8 +24,7 @@ const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { pathname } = router;
-  const { session, logout } = useContext(AuthContext);
-  const { isLoggedIn } = session;
+  const { logout } = useContext(AuthContext);
 
   return (
     <>
@@ -37,7 +36,7 @@ const Header = () => {
         justify="space-between"
         px={4}
       >
-        {isLoggedIn ? (
+        {pathname !== "/login" ? (
           <>
             <IconButton
               onClick={onOpen}

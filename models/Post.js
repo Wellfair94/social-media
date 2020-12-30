@@ -7,14 +7,14 @@ const { Schema } = mongoose;
 const PostSchema = new Schema({
   _id: {
     type: String,
-    default: uuid(),
+    default: uuid,
   },
-  user: {
-    id: String,
+  postedBy: {
+    user: String,
     username: String,
     avatarUrl: String,
   },
-  comments: [Comment],
+  comments: [Comment.schema],
   upvotes: [String],
   downvotes: [String],
   starredBy: [String],
@@ -28,6 +28,6 @@ const PostSchema = new Schema({
   },
 });
 
-const Post = mongoose.model("Post", PostSchema);
+const Post = mongoose.models.Post || mongoose.model("Post", PostSchema);
 
 export default Post;
