@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
 export const AuthContext = createContext();
@@ -9,6 +9,7 @@ const AuthProvider = ({ children }) => {
     user: null,
   });
   const router = useRouter();
+  const { pathname } = router;
 
   const login = (username, password) => {
     fetch("/api/auth/login", {
@@ -36,6 +37,12 @@ const AuthProvider = ({ children }) => {
 
     router.push("/");
   };
+
+  useEffect(() => {
+    if (pathname !== "/" && !session.user) {
+      router.push("/");
+    }
+  }, [pathname]);
 
   return (
     <AuthContext.Provider value={{ session, login, logout }}>
