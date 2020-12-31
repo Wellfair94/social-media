@@ -1,6 +1,5 @@
 import Head from "next/head";
 import Layout from "@/layout";
-import Login from "@/components/Login";
 import {
   Input,
   Stack,
@@ -10,102 +9,70 @@ import {
   Divider,
   Button,
   HStack,
+  InputGroup,
+  InputRightElement,
+  IconButton,
 } from "@chakra-ui/react";
 import Post from "@/components/Post";
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
+import PostCollection from "@/models/Post";
 import { AuthContext } from "@/contexts/AuthContext";
-
-const posts = [
-  {
-    id: 1,
-    user: {
-      id: 1,
-      email: "freddie.wellfair@gmail.com",
-      username: "Wellfair94",
-      avatarUrl: "",
-    },
-    upvotes: 12,
-    comments: [
-      {
-        id: 1,
-        createdOn: "timestamp",
-        user: {
-          id: 1,
-          email: "freddie.wellfair@gmail.com",
-          username: "Wellfair94",
-          avatarUrl: "",
-        },
-        body: "I love React, Chakra UI and Next.js",
-      },
-      {
-        id: 2,
-        createdOn: "timestamp",
-        user: {
-          id: 1,
-          email: "freddie.wellfair@gmail.com",
-          username: "Wellfair94",
-          avatarUrl: "",
-        },
-        body: "I love React!",
-      },
-    ],
-    downvotes: 5,
-    body: "This is a post by Freddie",
-    createdOn: "timestamp",
-    starredBy: [],
-  },
-  {
-    id: 2,
-    user: {
-      id: 2,
-      email: "toby.wellfair@gmail.com",
-      username: "TobyWellfair",
-      avatarUrl: "",
-    },
-    upvotes: 10,
-    comments: [
-      {
-        id: 1,
-        createdOn: "timestamp",
-        user: {
-          id: 1,
-          email: "freddie.wellfair@gmail.com",
-          username: "Wellfair94",
-          avatarUrl: "",
-        },
-        body: "I love React, Chakra UI and Next.js",
-      },
-    ],
-    downvotes: 2,
-    body: "This is a post by Toby",
-    createdOn: "timestamp",
-    starredBy: [],
-  },
-];
+import { RiSendPlaneFill } from "react-icons/ri";
 
 const feedButtons = ["Hot", "Recent", "Following"];
 
-// export async function getServerSideProps(context) {
-//   const res = await fetch("/api/posts");
-//   const data = await res.json();
+export async function getServerSideProps(context) {
+  const posts = await PostCollection.find({});
 
-//   if (!data) {
-//     return {
-//       notFound: true,
-//     };
-//   }
+  if (!posts) {
+    return {
+      notFound: true,
+    };
+  }
 
-//   return {
-//     props: {
-//       data: data,
-//     },
-//   };
-// }
+  return {
+    props: {
+      posts: JSON.parse(JSON.stringify(posts)),
+    },
+  };
+}
 
-export default function Home({ data }) {
+export default function Home({ posts }) {
+  const [input, setInput] = useState("");
   const [feed, setFeed] = useState("Hot");
+  const { session } = useContext(AuthContext);
+  const { user, username } = session.user || "";
 
-  console.log(data);
+  const handleChange = (e) => {
+    e.preventDefault();
+
+    setInput(e.target.value);
+  };
+
+  const createPost = async () => {
+    if (input === "") {
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:3000/api/posts", {
+        method: "POST",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          body: input,
+          postedBy: {
+            user: user,
+          },
+        }),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Layout>
@@ -115,11 +82,27 @@ export default function Home({ data }) {
       <Box w="100%">
         <Flex align="center">
           <Avatar size="md" mr={2} />
-          <Input
-            variant="outline"
-            bg="white"
-            placeholder="Whats on your mind, Freddie?"
-          />
+          <Box as="form" onSubmit={createPost} w="100%">
+            <InputGroup>
+              <Input
+                variant="outline"
+                bg="white"
+                placeholder={`Whats on your mind, ${username}?`}
+                onChange={handleChange}
+              />
+              <InputRightElement
+                children={
+                  <IconButton
+                    bg="none"
+                    borderBottomLeftRadius="none"
+                    borderTopLeftRadius="none"
+                    type="submit"
+                    icon={<RiSendPlaneFill />}
+                  />
+                }
+              />
+            </InputGroup>
+          </Box>
         </Flex>
       </Box>
       <Divider my={5} />
@@ -139,16 +122,27 @@ export default function Home({ data }) {
       </HStack>
 
       <Stack w="100%">
-        {posts.map(({ id, user, upvotes, comments, downvotes, body }) => (
-          <Post
-            key={id}
-            user={user}
-            upvotes={upvotes}
-            comments={comments}
-            downvotes={downvotes}
-            body={body}
-          />
-        ))}
+        {posts?.map(
+          ({
+            _id,
+            postedBy,
+            createdOn,
+            upvotes,
+            comments,
+            downvotes,
+            body,
+          }) => (
+            <Post
+              key={_id}
+              postedBy={postedBy}
+              createdOn={createdOn}
+              upvotes={upvotes}
+              comments={comments}
+              downvotes={downvotes}
+              body={body}
+            />
+          )
+        )}
       </Stack>
       <Button mt={5}>Show more</Button>
     </Layout>

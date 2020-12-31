@@ -27,6 +27,7 @@ const AuthProvider = ({ children }) => {
           isLoggedIn: true,
           user: data,
         });
+        localStorage.setItem("token", data?.token);
         router.push("/");
       })
       .catch((err) =>
@@ -44,6 +45,7 @@ const AuthProvider = ({ children }) => {
     });
 
     router.push("/login");
+    localStorage.setItem("token", "");
   };
 
   useEffect(() => {

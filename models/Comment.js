@@ -10,7 +10,7 @@ const CommentSchema = new Schema({
     default: uuid(),
   },
   createdOn: {
-    type: Date,
+    type: Number,
     default: Date.now(),
   },
   postedBy: {

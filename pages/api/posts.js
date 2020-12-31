@@ -7,12 +7,16 @@ dbConnect();
 
 export default verifyToken(async (req, res) => {
   if (req.method === "POST") {
-    // Gets avatar from their profile, incase it has been changed. Therefore will always get most up to date url
-    const getAvatar = await User.findOne({ _id: req.body.postedBy.user });
+    const user = await User.findOne({ _id: req.body.postedBy.user });
+    if (!user) return res.status(400).send("User doesn't exist");
 
     const post = new Post({
       body: req.body.body,
-      postedBy: req.body.postedBy,
+      postedBy: {
+        user: user._id,
+        username: user.username,
+        avatarUrl: user.avatarUrl,
+      },
     });
 
     try {

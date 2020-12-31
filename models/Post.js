@@ -10,16 +10,15 @@ const PostSchema = new Schema({
     default: uuid,
   },
   postedBy: {
-    user: String,
-    username: String,
-    avatarUrl: String,
+    type: String,
+    required: true,
   },
   comments: [Comment.schema],
   upvotes: [String],
   downvotes: [String],
   starredBy: [String],
   createdOn: {
-    type: Date,
+    type: Number,
     default: Date.now(),
   },
   body: {

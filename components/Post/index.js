@@ -20,10 +20,10 @@ import {
 import { useState } from "react";
 import Comment from "@/components/Comment";
 
-const Post = ({ user, upvotes, comments, downvotes, body }) => {
+const Post = ({ postedBy, createdOn, upvotes, comments, downvotes, body }) => {
   const [open, setOpen] = useState(false);
 
-  const { username, avatarUrl } = user;
+  const { user, username, avatarUrl } = postedBy;
 
   return (
     <Stack
@@ -45,19 +45,19 @@ const Post = ({ user, upvotes, comments, downvotes, body }) => {
       </Flex>
       <Text fontSize="lg">{body}</Text>
 
-      <Text fontSize="xs">Sat 26 Dec 2020, 22:46</Text>
+      <Text fontSize="xs">{createdOn}</Text>
 
       <Box>
         <Divider my={2} />
         <HStack w="100%" justify="space-between" color="brand.darkGrey">
           <Button w="32%" bg="none">
-            <ArrowUpIcon mr={1} /> {upvotes}
+            <ArrowUpIcon mr={1} /> {upvotes.length}
           </Button>
           <Button w="32%" bg="none" onClick={() => setOpen(!open)}>
             <ChatIcon mr={1} /> {comments.length}
           </Button>
           <Button w="32%" bg="none">
-            <ArrowDownIcon mr={1} /> {downvotes}
+            <ArrowDownIcon mr={1} /> {downvotes.length}
           </Button>
         </HStack>
 
