@@ -14,10 +14,16 @@ const CommentSchema = new Schema({
     default: Date.now(),
   },
   postedBy: {
-    type: { user: String, username: String, avatarUrl: String },
-    required: true,
+    user: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    avatarUrl: String || undefined,
   },
-
   body: {
     type: String,
     required: true,

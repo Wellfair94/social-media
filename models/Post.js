@@ -10,8 +10,15 @@ const PostSchema = new Schema({
     default: uuid,
   },
   postedBy: {
-    type: String,
-    required: true,
+    user: {
+      type: String,
+      required: true,
+    },
+    username: {
+      type: String,
+      required: true,
+    },
+    avatarUrl: String || undefined,
   },
   comments: [Comment.schema],
   upvotes: [String],
@@ -19,7 +26,7 @@ const PostSchema = new Schema({
   starredBy: [String],
   createdOn: {
     type: Number,
-    default: Date.now(),
+    default: Date.now,
   },
   body: {
     type: String,

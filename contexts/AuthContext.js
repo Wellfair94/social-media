@@ -28,7 +28,7 @@ const AuthProvider = ({ children }) => {
           user: data,
         });
         localStorage.setItem("token", data?.token);
-        router.push("/");
+        router.push("/feed");
       })
       .catch((err) =>
         setTimeout(() => {
@@ -44,13 +44,13 @@ const AuthProvider = ({ children }) => {
       user: null,
     });
 
-    router.push("/login");
+    router.push("/");
     localStorage.setItem("token", "");
   };
 
   useEffect(() => {
-    if (pathname !== "/login" && !session.user) {
-      router.push("/login");
+    if (pathname !== "/" && !session.user) {
+      router.push("/");
     }
   }, [pathname]);
 

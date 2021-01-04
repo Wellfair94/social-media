@@ -15,7 +15,7 @@ export default verifyToken(async (req, res) => {
       postedBy: {
         user: user._id,
         username: user.username,
-        avatarUrl: user.avatarUrl,
+        avatarUrl: user.avatarUrl || undefined,
       },
     });
 

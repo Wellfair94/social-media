@@ -1,7 +1,7 @@
 import { Flex, Avatar, Box, Text, Heading } from "@chakra-ui/react";
 
-const Comment = ({ user, body }) => {
-  const { username, avatarUrl } = user;
+const Comment = ({ postedBy, body }) => {
+  const { user, username, avatarUrl } = postedBy || "";
 
   return (
     <Flex w="100%" color="brand.darkGrey">

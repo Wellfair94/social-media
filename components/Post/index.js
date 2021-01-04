@@ -16,14 +16,54 @@ import {
   Divider,
   Input,
   IconButton,
+  InputGroup,
+  InputRightElement,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Comment from "@/components/Comment";
+import { DateTime } from "luxon";
+import { RiSendPlaneFill } from "react-icons/ri";
 
-const Post = ({ postedBy, createdOn, upvotes, comments, downvotes, body }) => {
+const Post = ({
+  id,
+  postedBy,
+  createdOn,
+  upvotes,
+  comments,
+  downvotes,
+  body,
+}) => {
   const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const { user, username, avatarUrl } = postedBy;
+
+  const formatted = DateTime.fromMillis(createdOn).toLocaleString(
+    DateTime.DATETIME_MED
+  );
+
+  const commentsData = [
+    {
+      id: 1,
+      createdOn: 1,
+      postedBy: {
+        user: 1,
+        username: "Wellfair94",
+        avatarUrl: "",
+      },
+      body: "test comment",
+    },
+    {
+      id: 1,
+      createdOn: 1,
+      postedBy: {
+        user: 1,
+        username: "Wellfair94",
+        avatarUrl: "",
+      },
+      body: "test comment",
+    },
+  ];
 
   return (
     <Stack
@@ -45,7 +85,7 @@ const Post = ({ postedBy, createdOn, upvotes, comments, downvotes, body }) => {
       </Flex>
       <Text fontSize="lg">{body}</Text>
 
-      <Text fontSize="xs">{createdOn}</Text>
+      <Text fontSize="xs">{formatted}</Text>
 
       <Box>
         <Divider my={2} />
@@ -65,15 +105,27 @@ const Post = ({ postedBy, createdOn, upvotes, comments, downvotes, body }) => {
           <Stack mt={2}>
             <Flex align="center">
               <Avatar size="sm" mr={2} />
-              <Input
-                h="32px"
-                variant="outline"
-                placeholder="Write a comment..."
-              />
+              <InputGroup>
+                <Input variant="outline" placeholder="Write a comment..." />
+                <InputRightElement
+                  children={
+                    <IconButton
+                      disabled={loading}
+                      bg="none"
+                      borderBottomLeftRadius="none"
+                      borderTopLeftRadius="none"
+                      type="submit"
+                      icon={
+                        loading ? <Spinner size="sm" /> : <RiSendPlaneFill />
+                      }
+                    />
+                  }
+                />
+              </InputGroup>
             </Flex>
 
-            {comments.map(({ id, user, body }) => (
-              <Comment key={id} user={user} body={body} />
+            {commentsData.map(({ id, postedBy, body }) => (
+              <Comment key={id} postedBy={postedBy} body={body} />
             ))}
           </Stack>
         ) : null}

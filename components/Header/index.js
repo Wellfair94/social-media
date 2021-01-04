@@ -24,7 +24,8 @@ const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
   const { pathname } = router;
-  const { logout } = useContext(AuthContext);
+  const { session, logout } = useContext(AuthContext);
+  const { username } = session.user || "";
 
   return (
     <>
@@ -36,7 +37,7 @@ const Header = () => {
         justify="space-between"
         px={4}
       >
-        {pathname !== "/login" ? (
+        {pathname !== "/" ? (
           <>
             <IconButton
               onClick={onOpen}
@@ -59,7 +60,7 @@ const Header = () => {
 
             <DrawerHeader>
               <Avatar size="sm" mr={2} />
-              Freddie Wellfair
+              {username}
             </DrawerHeader>
 
             <Divider />

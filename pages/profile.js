@@ -11,80 +11,13 @@ import {
   HStack,
   Stack,
   Text,
-  Input,
-  FormControl,
-  FormHelperText,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { useState } from "react";
 
-const posts = [
-  {
-    id: 1,
-    user: {
-      id: 1,
-      email: "freddie.wellfair@gmail.com",
-      username: "Wellfair94",
-      avatarUrl: "",
-    },
-    upvotes: 12,
-    comments: [
-      {
-        id: 1,
-        createdOn: "timestamp",
-        user: {
-          id: 1,
-          email: "freddie.wellfair@gmail.com",
-          username: "Wellfair94",
-          avatarUrl: "",
-        },
-        body: "I love React, Chakra UI and Next.js",
-      },
-      {
-        id: 2,
-        createdOn: "timestamp",
-        user: {
-          id: 1,
-          email: "freddie.wellfair@gmail.com",
-          username: "Wellfair94",
-          avatarUrl: "",
-        },
-        body: "I love React!",
-      },
-    ],
-    downvotes: 5,
-    body: "This is a post by Freddie",
-    createdOn: "timestamp",
-    starredBy: [],
-  },
-  {
-    id: 2,
-    user: {
-      id: 2,
-      email: "toby.wellfair@gmail.com",
-      username: "TobyWellfair",
-      avatarUrl: "",
-    },
-    upvotes: 10,
-    comments: [
-      {
-        id: 1,
-        createdOn: "timestamp",
-        user: {
-          id: 1,
-          email: "freddie.wellfair@gmail.com",
-          username: "Wellfair94",
-          avatarUrl: "",
-        },
-        body: "I love React, Chakra UI and Next.js",
-      },
-    ],
-    downvotes: 2,
-    body: "This is a post by Toby",
-    createdOn: "timestamp",
-    starredBy: [],
-  },
-];
+const posts = [];
+
+// export async function getServerSideProps(context) {}
 
 export default function Profile() {
   const [tab, setTab] = useState("posts");
