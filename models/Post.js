@@ -20,10 +20,12 @@ const PostSchema = new Schema({
     },
     avatarUrl: String || undefined,
   },
-  comments: [Comment.schema],
-  upvotes: [String],
-  downvotes: [String],
-  starredBy: [String],
+  meta: {
+    comments: [Comment.schema],
+    upvotes: [String],
+    downvotes: [String],
+    starredBy: [String],
+  },
   createdOn: {
     type: Number,
     default: Date.now,

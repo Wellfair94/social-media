@@ -8,6 +8,7 @@ dbConnect();
 
 export default verifyToken(async (req, res) => {
   if (req.method === "POST") {
+    // Get userID from jwt
     const token = req.headers.authorization;
     const { _id } = jwt.verify(token, process.env.TOKEN_SECRET);
 

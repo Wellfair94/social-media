@@ -8,7 +8,6 @@ import {
   Box,
   Divider,
   Button,
-  HStack,
   InputGroup,
   InputRightElement,
   IconButton,
@@ -114,28 +113,16 @@ export default function Feed({ postsData }) {
       <Divider my={5} />
 
       <Stack w="100%">
-        {posts?.map(
-          ({
-            _id,
-            postedBy,
-            createdOn,
-            upvotes,
-            comments,
-            downvotes,
-            body,
-          }) => (
-            <Post
-              key={_id}
-              id={_id}
-              postedBy={postedBy}
-              createdOn={createdOn}
-              upvotes={upvotes}
-              comments={comments}
-              downvotes={downvotes}
-              body={body}
-            />
-          )
-        )}
+        {posts?.map(({ _id, postedBy, createdOn, meta, body }) => (
+          <Post
+            key={_id}
+            _id={_id}
+            postedBy={postedBy}
+            createdOn={createdOn}
+            meta={meta}
+            body={body}
+          />
+        ))}
       </Stack>
       <Button mt={5}>Show more</Button>
     </Layout>

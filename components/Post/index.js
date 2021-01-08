@@ -24,17 +24,39 @@ import Comment from "@/components/Comment";
 import { DateTime } from "luxon";
 import { RiSendPlaneFill } from "react-icons/ri";
 
-const Post = ({
-  id,
-  postedBy,
-  createdOn,
-  upvotes,
-  comments,
-  downvotes,
-  body,
-}) => {
+const commentsData = [
+  {
+    _id: 1,
+    createdOn: 1,
+    postedBy: {
+      _id: 1,
+      username: "Wellfair94",
+      avatarUrl: "",
+    },
+    body: "test comment",
+  },
+  {
+    _id: 1,
+    createdOn: 1,
+    postedBy: {
+      _id: 1,
+      username: "Wellfair94",
+      avatarUrl: "",
+    },
+    body: "test comment",
+  },
+];
+
+const Post = ({ _id, postedBy, createdOn, meta, body }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [metaData, setMetaData] = useState({
+    upvotes: meta.upvotes,
+    comments: meta.comments,
+    downvotes: meta.downvotes,
+  });
+
+  const { upvotes, comments, downvotes } = metaData;
 
   const { username, avatarUrl } = postedBy;
 
@@ -42,28 +64,49 @@ const Post = ({
     DateTime.DATETIME_MED
   );
 
-  const commentsData = [
-    {
-      _id: 1,
-      createdOn: 1,
-      postedBy: {
-        _id: 1,
-        username: "Wellfair94",
-        avatarUrl: "",
-      },
-      body: "test comment",
-    },
-    {
-      _id: 1,
-      createdOn: 1,
-      postedBy: {
-        _id: 1,
-        username: "Wellfair94",
-        avatarUrl: "",
-      },
-      body: "test comment",
-    },
-  ];
+  const sendUpvote = async () => {
+    // do upvote
+    try {
+      const res = await fetch(`http://localhost:3000/api/posts/${_id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          action: "upvote",
+          postID: _id,
+        }),
+      }).then((res) => res.json());
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const sendComment = () => {
+    // do comment
+  };
+
+  const sendDownvote = async () => {
+    // do downvote
+    try {
+      const res = await fetch(`http://localhost:3000/api/posts/${_id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          action: "downvote",
+          postID: _id,
+        }),
+      }).then((res) => res.json());
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <Stack
@@ -90,13 +133,13 @@ const Post = ({
       <Box>
         <Divider my={2} />
         <HStack w="100%" justify="space-between" color="brand.darkGrey">
-          <Button w="32%" bg="none">
+          <Button w="32%" bg="none" onClick={sendUpvote}>
             <ArrowUpIcon mr={1} /> {upvotes.length}
           </Button>
           <Button w="32%" bg="none" onClick={() => setOpen(!open)}>
             <ChatIcon mr={1} /> {comments.length}
           </Button>
-          <Button w="32%" bg="none">
+          <Button w="32%" bg="none" onClick={sendDownvote}>
             <ArrowDownIcon mr={1} /> {downvotes.length}
           </Button>
         </HStack>
