@@ -10,6 +10,6 @@ export default (fn) => async (req, res) => {
 
     if (decoded) return await fn(req, res);
   } catch (err) {
-    res.status(401).send("Token invalid");
+    res.status(401).send({ message: "Token invalid" });
   }
 };

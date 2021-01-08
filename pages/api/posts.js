@@ -2,18 +2,22 @@ import verifyToken from "@/pages/api/auth/verifyToken";
 import Post from "@/models/Post";
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
+import jwt from "jsonwebtoken";
 
 dbConnect();
 
 export default verifyToken(async (req, res) => {
   if (req.method === "POST") {
-    const user = await User.findOne({ _id: req.body.postedBy.user });
-    if (!user) return res.status(400).send("User doesn't exist");
+    const token = req.headers.authorization;
+    const { _id } = jwt.verify(token, process.env.TOKEN_SECRET);
+
+    const user = await User.findOne({ _id: _id });
+    if (!user) return res.status(400).send({ message: "User doesn't exist" });
 
     const post = new Post({
       body: req.body.body,
       postedBy: {
-        user: user._id,
+        _id: user._id,
         username: user.username,
         avatarUrl: user.avatarUrl || undefined,
       },

@@ -21,7 +21,8 @@ export default async (req, res) => {
       return res.status(400).send("User with that email already exists");
 
     const usernameExists = await User.findOne({ username: req.body.username });
-    if (usernameExists) return res.status(400).send("That username is taken");
+    if (usernameExists)
+      return res.status(400).send({ message: "That username is taken" });
 
     const salt = await bycrypt.genSalt(10);
     const hashedPassword = await bycrypt.hash(req.body.password, salt);

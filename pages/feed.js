@@ -15,10 +15,9 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import Post from "@/components/Post";
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import PostCollection from "@/models/Post";
 import { AuthContext } from "@/contexts/AuthContext";
-// ! rethink icon below
 import { RiSendPlaneFill } from "react-icons/ri";
 
 export async function getServerSideProps(context) {
@@ -42,7 +41,7 @@ export default function Feed({ postsData }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const { session } = useContext(AuthContext);
-  const { user, username } = session.user || "";
+  const { username } = session.user || "";
 
   const handleChange = (e) => {
     setInput(e.target.value);
@@ -67,9 +66,6 @@ export default function Feed({ postsData }) {
         },
         body: JSON.stringify({
           body: input,
-          postedBy: {
-            user: user,
-          },
         }),
       }).then((res) => res.json());
 

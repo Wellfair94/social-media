@@ -36,7 +36,7 @@ const Post = ({
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const { user, username, avatarUrl } = postedBy;
+  const { username, avatarUrl } = postedBy;
 
   const formatted = DateTime.fromMillis(createdOn).toLocaleString(
     DateTime.DATETIME_MED
