@@ -27,14 +27,11 @@ export default async (req, res) => {
       return res.status(400).send("Incorrect username or password");
 
     const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET);
-    // const token = jwt.sign({ _id: user._id }, process.env.TOKEN_SECRET, {
-    //   expiresIn: "1h",
-    // });
 
     res.setHeader("authorization", token);
     res.send({
       token: token,
-      user: user._id,
+      _id: user._id,
       username: user.username,
       bio: user.bio,
       meta: user.meta,

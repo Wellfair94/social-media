@@ -34,7 +34,7 @@ export default async (req, res) => {
 
     try {
       const savedUser = await user.save();
-      res.json({ user: savedUser._id });
+      res.json({ _id: savedUser._id });
     } catch (err) {
       res.status(400).json({ message: err });
     }

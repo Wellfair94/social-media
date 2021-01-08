@@ -11,6 +11,9 @@ import {
   HStack,
   Stack,
   Text,
+  Editable,
+  EditablePreview,
+  EditableInput,
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { useState } from "react";
@@ -32,6 +35,10 @@ export default function Profile() {
         <Avatar size="xl" />
         <Heading>Wellfair94</Heading>
         <Text>Write something about yourself.</Text>
+        {/* <Editable defaultValue="Take some chakra">
+          <EditablePreview _hover={{ cursor: "pointer" }} />
+          <EditableInput px={2} />
+        </Editable> */}
 
         <Button>Follow</Button>
 

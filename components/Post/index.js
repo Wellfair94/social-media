@@ -44,20 +44,20 @@ const Post = ({
 
   const commentsData = [
     {
-      id: 1,
+      _id: 1,
       createdOn: 1,
       postedBy: {
-        user: 1,
+        _id: 1,
         username: "Wellfair94",
         avatarUrl: "",
       },
       body: "test comment",
     },
     {
-      id: 1,
+      _id: 1,
       createdOn: 1,
       postedBy: {
-        user: 1,
+        _id: 1,
         username: "Wellfair94",
         avatarUrl: "",
       },
@@ -124,8 +124,8 @@ const Post = ({
               </InputGroup>
             </Flex>
 
-            {commentsData.map(({ id, postedBy, body }) => (
-              <Comment key={id} postedBy={postedBy} body={body} />
+            {commentsData.map(({ _id, postedBy, body }) => (
+              <Comment key={_id} postedBy={postedBy} body={body} />
             ))}
           </Stack>
         ) : null}

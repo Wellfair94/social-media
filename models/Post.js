@@ -10,7 +10,7 @@ const PostSchema = new Schema({
     default: uuid,
   },
   postedBy: {
-    user: {
+    _id: {
       type: String,
       required: true,
     },

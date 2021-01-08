@@ -14,7 +14,7 @@ const CommentSchema = new Schema({
     default: Date.now(),
   },
   postedBy: {
-    user: {
+    _id: {
       type: String,
       required: true,
     },

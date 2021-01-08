@@ -11,8 +11,6 @@ const AuthProvider = ({ children }) => {
   const router = useRouter();
   const { pathname } = router;
 
-  console.log(session);
-
   const login = async (username, password, setSubmitting) => {
     fetch("/api/auth/login", {
       method: "POST",
