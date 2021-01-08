@@ -18,42 +18,21 @@ import {
   IconButton,
   InputGroup,
   InputRightElement,
+  Spinner,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import Comment from "@/components/Comment";
 import { DateTime } from "luxon";
 import { RiSendPlaneFill } from "react-icons/ri";
 
-const commentsData = [
-  {
-    _id: 1,
-    createdOn: 1,
-    postedBy: {
-      _id: 1,
-      username: "Wellfair94",
-      avatarUrl: "",
-    },
-    body: "test comment",
-  },
-  {
-    _id: 1,
-    createdOn: 1,
-    postedBy: {
-      _id: 1,
-      username: "Wellfair94",
-      avatarUrl: "",
-    },
-    body: "test comment",
-  },
-];
-
 const Post = ({ _id, postedBy, createdOn, meta, body }) => {
   const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [input, setInput] = useState("");
   const [metaData, setMetaData] = useState({
-    upvotes: meta.upvotes,
+    upvotes: meta.upvotes.length,
     comments: meta.comments,
-    downvotes: meta.downvotes,
+    downvotes: meta.downvotes.length,
   });
 
   const { upvotes, comments, downvotes } = metaData;
@@ -64,8 +43,20 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
     DateTime.DATETIME_MED
   );
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setLoading(true);
+
+    try {
+      sendComment(input).then(() => setInput(""));
+    } catch (err) {
+      console.log(err);
+    }
+
+    setLoading(false);
+  };
+
   const sendUpvote = async () => {
-    // do upvote
     try {
       const res = await fetch(`http://localhost:3000/api/posts/${_id}`, {
         method: "PUT",
@@ -79,13 +70,37 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
           postID: _id,
         }),
       }).then((res) => res.json());
+
+      setMetaData(res);
     } catch (err) {
       console.log(err);
     }
   };
 
-  const sendComment = () => {
+  const sendComment = async (input) => {
+    if (input === "") {
+      return;
+    }
     // do comment
+    try {
+      const res = await fetch(`http://localhost:3000/api/posts/${_id}`, {
+        method: "PUT",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          authorization: localStorage.getItem("token"),
+        },
+        body: JSON.stringify({
+          action: "comment",
+          postID: _id,
+          body: input,
+        }),
+      }).then((res) => res.json());
+
+      setMetaData(res);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const sendDownvote = async () => {
@@ -103,6 +118,8 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
           postID: _id,
         }),
       }).then((res) => res.json());
+
+      setMetaData(res);
     } catch (err) {
       console.log(err);
     }
@@ -134,13 +151,14 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
         <Divider my={2} />
         <HStack w="100%" justify="space-between" color="brand.darkGrey">
           <Button w="32%" bg="none" onClick={sendUpvote}>
-            <ArrowUpIcon mr={1} /> {upvotes.length}
+            <ArrowUpIcon mr={1} /> {upvotes}
           </Button>
           <Button w="32%" bg="none" onClick={() => setOpen(!open)}>
-            <ChatIcon mr={1} /> {comments.length}
+            <ChatIcon mr={1} /> {comments?.length}
           </Button>
           <Button w="32%" bg="none" onClick={sendDownvote}>
-            <ArrowDownIcon mr={1} /> {downvotes.length}
+            <ArrowDownIcon mr={1} /> {downvotes > 0 && "-"}
+            {downvotes}
           </Button>
         </HStack>
 
@@ -148,28 +166,37 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
           <Stack mt={2}>
             <Flex align="center">
               <Avatar size="sm" mr={2} />
-              <InputGroup>
-                <Input variant="outline" placeholder="Write a comment..." />
-                <InputRightElement
-                  children={
-                    <IconButton
-                      disabled={loading}
-                      bg="none"
-                      borderBottomLeftRadius="none"
-                      borderTopLeftRadius="none"
-                      type="submit"
-                      icon={
-                        loading ? <Spinner size="sm" /> : <RiSendPlaneFill />
-                      }
-                    />
-                  }
-                />
-              </InputGroup>
+              <Box as="form" w="100%" onSubmit={handleSubmit}>
+                <InputGroup>
+                  <Input
+                    variant="outline"
+                    placeholder="Write a comment..."
+                    onChange={(e) => setInput(e.target.value)}
+                  />
+                  <InputRightElement
+                    children={
+                      <IconButton
+                        type="submit"
+                        disabled={loading}
+                        bg="none"
+                        borderBottomLeftRadius="none"
+                        borderTopLeftRadius="none"
+                        type="submit"
+                        icon={
+                          loading ? <Spinner size="sm" /> : <RiSendPlaneFill />
+                        }
+                      />
+                    }
+                  />
+                </InputGroup>
+              </Box>
             </Flex>
 
-            {commentsData.map(({ _id, postedBy, body }) => (
-              <Comment key={_id} postedBy={postedBy} body={body} />
-            ))}
+            {comments
+              .map(({ _id, postedBy, body }) => (
+                <Comment key={_id} postedBy={postedBy} body={body} />
+              ))
+              .reverse()}
           </Stack>
         ) : null}
       </Box>

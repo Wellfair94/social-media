@@ -3,6 +3,7 @@ import Post from "@/models/Post";
 import dbConnect from "@/utils/dbConnect";
 import User from "@/models/User";
 import jwt from "jsonwebtoken";
+import Comment from "@/models/Comment";
 
 dbConnect();
 
@@ -10,12 +11,18 @@ export default verifyToken(async (req, res) => {
   if (req.method === "PUT") {
     const postID = req.body.postID;
 
+    if (req.body.body === "")
+      return res.status(400).send({ message: "Please enter a comment" });
+
     // Get userID from jwt
     const token = req.headers.authorization;
     const { _id } = jwt.verify(token, process.env.TOKEN_SECRET);
 
     const post = await Post.findOne({ _id: postID });
     if (!post) return res.status(400).send({ message: "Post doesn't exist" });
+
+    const user = await User.findOne({ _id: _id });
+    if (!user) return res.status(400).send({ message: "User doesn't exist" });
 
     const { meta } = post;
     const { upvotes, downvotes, comments } = meta;
@@ -51,18 +58,24 @@ export default verifyToken(async (req, res) => {
           }
           break;
         default:
-        // comment
+          const comment = new Comment({
+            postedBy: {
+              _id: _id,
+              username: user.username,
+              avatarUrl: user.avatarUrl || undefined,
+            },
+            body: req.body.body,
+          });
+
+          post.meta.comments = [...comments, comment];
       }
 
       const updatedPost = await post.save();
 
       res.status(200).send({
-        test: "testing",
-        meta: {
-          upvotes: updatedPost.meta.upvotes.length,
-          comments: updatedPost.meta.comments,
-          downvotes: updatedPost.meta.downvotes.length,
-        },
+        upvotes: updatedPost.meta.upvotes.length,
+        comments: updatedPost.meta.comments,
+        downvotes: updatedPost.meta.downvotes.length,
       });
     } catch (err) {
       console.log(err);

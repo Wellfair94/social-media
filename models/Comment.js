@@ -7,11 +7,11 @@ const { Schema } = mongoose;
 const CommentSchema = new Schema({
   _id: {
     type: String,
-    default: uuid(),
+    default: uuid,
   },
   createdOn: {
     type: Number,
-    default: Date.now(),
+    default: Date.now,
   },
   postedBy: {
     _id: {
