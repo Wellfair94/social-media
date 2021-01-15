@@ -20,6 +20,7 @@ import { useState, useContext } from "react";
 import PostCollection from "@/models/Post";
 import { AuthContext } from "@/contexts/AuthContext";
 import { RiSendPlaneFill } from "react-icons/ri";
+import { sendPost } from "@/lib/feed";
 
 export async function getServerSideProps(context) {
   const posts = await PostCollection.find({});
@@ -44,10 +45,6 @@ export default function Feed({ postsData }) {
   const { session } = useContext(AuthContext);
   const { username } = session.user || "";
 
-  const handleChange = (e) => {
-    setInput(e.target.value);
-  };
-
   const createPost = async (e) => {
     e.preventDefault();
 
@@ -57,27 +54,12 @@ export default function Feed({ postsData }) {
 
     setLoading(true);
 
-    try {
-      const res = await fetch("http://localhost:3000/api/posts", {
-        method: "POST",
-        headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
-          authorization: localStorage.getItem("token"),
-        },
-        body: JSON.stringify({
-          body: input,
-        }),
-      }).then((res) => res.json());
-
+    sendPost(input).then((res) => {
       setPosts([res, ...posts]);
-    } catch (err) {
-      console.log(err);
-    }
+      setInput("");
+    });
 
-    setTimeout(() => {
-      setLoading(false);
-    }, 500);
+    setLoading(false);
   };
 
   return (
@@ -111,7 +93,8 @@ export default function Feed({ postsData }) {
                 variant="outline"
                 bg="white"
                 placeholder={`Whats on your mind, ${username}?`}
-                onChange={handleChange}
+                onChange={(e) => setInput(e.target.value)}
+                value={input}
               />
               <InputRightElement
                 children={
