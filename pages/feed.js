@@ -12,6 +12,8 @@ import {
   InputRightElement,
   IconButton,
   Spinner,
+  Circle,
+  HStack,
 } from "@chakra-ui/react";
 import Post from "@/components/Post";
 import { useState, useContext } from "react";
@@ -83,6 +85,23 @@ export default function Feed({ postsData }) {
       <Head>
         <title>Create Next App</title>
       </Head>
+
+      {/* 
+      STORIES
+      <HStack
+        p={3}
+        bg="tomato"
+        spacing={4}
+        mb={5}
+        justifyContent="flex-start"
+        w="100%"
+        overflow="hidden"
+      >
+        <Avatar size="md" />
+        <Avatar size="md" />
+        <Avatar size="md" />
+      </HStack> */}
+
       <Box w="100%">
         <Flex align="center">
           <Avatar size="md" mr={2} />
@@ -111,7 +130,6 @@ export default function Feed({ postsData }) {
         </Flex>
       </Box>
       <Divider my={5} />
-
       <Stack w="100%">
         {posts?.map(({ _id, postedBy, createdOn, meta, body }) => (
           <Post

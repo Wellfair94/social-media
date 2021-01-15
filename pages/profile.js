@@ -1,5 +1,6 @@
 import Follower from "@/components/Follower";
 import Post from "@/components/Post";
+import { AuthContext } from "@/contexts/AuthContext";
 import Layout from "@/layout";
 import {
   Avatar,
@@ -16,7 +17,7 @@ import {
   EditableInput,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import { useState } from "react";
+import { useState, useContext } from "react";
 
 const posts = [];
 
@@ -24,6 +25,8 @@ const posts = [];
 
 export default function Profile() {
   const [tab, setTab] = useState("posts");
+  const { session } = useContext(AuthContext);
+  const { _id } = session.user;
 
   return (
     <Layout>

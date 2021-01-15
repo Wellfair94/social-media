@@ -36,6 +36,10 @@ export default verifyToken(async (req, res) => {
       const addUpvote = [...upvotes, _id];
       const addDownvote = [...downvotes, _id];
 
+      const isStarred = user.meta.starred.includes(post);
+      const removeStar = user.meta.starred.filter((item) => item !== _id);
+      const addStar = [...user.meta.starred, postID];
+
       switch (req.body.action) {
         case "upvote":
           if (hasDownvoted) {
@@ -57,7 +61,7 @@ export default verifyToken(async (req, res) => {
             post.meta.downvotes = addDownvote;
           }
           break;
-        default:
+        case "comment":
           const comment = new Comment({
             postedBy: {
               _id: _id,
@@ -68,6 +72,20 @@ export default verifyToken(async (req, res) => {
           });
 
           post.meta.comments = [...comments, comment];
+          break;
+
+        default:
+          if (isStarred) {
+            user.meta.starred = removeStar;
+          } else {
+            user.meta.starred = addStar;
+          }
+
+          const updatedUser = await user.save;
+
+          console.log(updatedUser);
+
+          res.status(200).send(updatedUser);
       }
 
       const updatedPost = await post.save();

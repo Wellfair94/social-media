@@ -13,6 +13,7 @@ import {
   Divider,
   Button,
   Stack,
+  Input,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { navLinks } from "@/utils/static";
