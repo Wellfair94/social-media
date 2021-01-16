@@ -41,10 +41,25 @@ export default verifyToken(async (req, res) => {
       const updatedProfile = await profile.save();
       const updatedUser = await user.save();
 
-      res.send({
-        followers: updatedProfile.meta.followers,
-        following: updatedUser.meta.following,
-      });
+      const { _id, username, avatarUrl } = updatedUser;
+
+      if (updatedProfile.meta.followers.includes(_id)) {
+        res.send({
+          followers: updatedProfile.meta.followers,
+          newFollower: {
+            _id: _id,
+            username: username,
+            avatarUrl: avatarUrl,
+          },
+        });
+      } else {
+        res.send({
+          followers: updatedProfile.meta.followers,
+          removedFollower: {
+            _id: _id,
+          },
+        });
+      }
     } catch (err) {
       res.status(400).json({ message: err });
     }

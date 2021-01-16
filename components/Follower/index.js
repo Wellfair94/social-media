@@ -1,6 +1,6 @@
 import { Flex, Avatar, Heading, Button } from "@chakra-ui/react";
 
-const Follower = () => {
+const Follower = ({ _id, username, avatarUrl }) => {
   return (
     <Flex
       w="100%"
@@ -13,7 +13,7 @@ const Follower = () => {
     >
       <Flex align="center">
         <Avatar size="sm" mr={2} />
-        <Heading fontSize="lg">Joe Bloggs</Heading>
+        <Heading fontSize="lg">{username}</Heading>
       </Flex>
 
       <Button>Follow</Button>

@@ -28,7 +28,6 @@ export default verifyToken(async (req, res) => {
     const { upvotes, downvotes, comments } = meta;
 
     try {
-      // ! Find a shorter hand way of updating posts by each property
       const hasUpvoted = upvotes.includes(_id);
       const hasDownvoted = downvotes.includes(_id);
       const removeUpvote = downvotes.filter((item) => item !== _id);

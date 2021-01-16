@@ -35,9 +35,31 @@ export async function getServerSideProps({ query }) {
     };
   }
   const { _id, username, bio, meta } = profileData;
-  const { posts } = meta;
+  const { posts, followers, following } = meta;
 
   const postsData = await PostCollection.find({ _id: { $in: posts } });
+  const followersData = await UserCollection.find({ _id: { $in: followers } });
+  const followingData = await UserCollection.find({ _id: { $in: following } });
+
+  const filteredFollowersData = followersData.map(
+    ({ _id, username, avatarUrl }) => {
+      return {
+        _id: _id,
+        username: username,
+        avatarUrl: avatarUrl,
+      };
+    }
+  );
+
+  const filteredFollowingData = followingData.map(
+    ({ _id, username, avatarUrl }) => {
+      return {
+        _id: _id,
+        username: username,
+        avatarUrl: avatarUrl,
+      };
+    }
+  );
 
   return {
     props: {
@@ -50,20 +72,53 @@ export async function getServerSideProps({ query }) {
         })
       ),
       postsData: JSON.parse(JSON.stringify(postsData)),
+      followersData: JSON.parse(JSON.stringify(filteredFollowersData)),
+      followingData: JSON.parse(JSON.stringify(filteredFollowingData)),
     },
   };
 }
 
-export default function Profile({ profileData, postsData }) {
+export default function Profile({
+  profileData,
+  postsData,
+  followersData,
+  followingData,
+}) {
   const [tab, setTab] = useState("posts");
   const { session } = useContext(AuthContext);
+  const userId = session.user?._id;
   const { _id, username, bio, meta } = profileData;
-  const { followers, following, posts } = meta;
+  const [metaData, setMetaData] = useState({
+    followers: meta.followers,
+    following: meta.following,
+    posts: meta.posts,
+  });
+  const { followers, following, posts } = metaData;
+  const [isFollowing, setIsFollowing] = useState(() =>
+    followers.includes(userId)
+  );
+  const [updatedFollowersData, setUpdatedFollowersData] = useState(
+    followersData
+  );
 
   const toggleFollow = () => {
-    alert("test");
-    followProfile(_id).then((res) => console.log(res));
+    followProfile(_id).then(({ followers, newFollower, removedFollower }) => {
+      setIsFollowing(!isFollowing);
+
+      if (newFollower) {
+        setUpdatedFollowersData([...updatedFollowersData, newFollower]);
+      } else {
+        const removeFollower = updatedFollowersData.filter(
+          (item) => item === removedFollower._id
+        );
+        setUpdatedFollowersData(removeFollower);
+      }
+
+      setMetaData({ ...metaData, followers: followers });
+    });
   };
+
+  console.log(updatedFollowersData);
 
   return (
     <Layout>
@@ -82,7 +137,9 @@ export default function Profile({ profileData, postsData }) {
         </Editable> */}
 
         {session?.user?._id === _id ? null : (
-          <Button onClick={toggleFollow}>Follow</Button>
+          <Button onClick={toggleFollow}>
+            {!isFollowing ? "Follow" : "Following"}
+          </Button>
         )}
 
         <HStack w="100%" justifyContent="space-evenly">
@@ -140,9 +197,14 @@ export default function Profile({ profileData, postsData }) {
           ) : tab === "followers" ? (
             <>
               <Stack>
-                <Follower />
-                <Follower />
-                <Follower />
+                {updatedFollowersData.map(({ _id, username, avatarUrl }) => (
+                  <Follower
+                    key={_id}
+                    id={_id}
+                    username={username}
+                    avatarUrl={avatarUrl}
+                  />
+                ))}
               </Stack>
 
               <Flex justifyContent="center">
@@ -152,9 +214,14 @@ export default function Profile({ profileData, postsData }) {
           ) : (
             <>
               <Stack>
-                <Follower />
-                <Follower />
-                <Follower />
+                {followingData.map(({ _id, username, avatarUrl }) => (
+                  <Follower
+                    key={_id}
+                    id={_id}
+                    username={username}
+                    avatarUrl={avatarUrl}
+                  />
+                ))}
               </Stack>
 
               <Flex justifyContent="center">
