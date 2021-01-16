@@ -22,7 +22,7 @@ import { AuthContext } from "@/contexts/AuthContext";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { sendPost } from "@/lib/feed";
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps() {
   const posts = await PostCollection.find({});
 
   if (!posts) {

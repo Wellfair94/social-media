@@ -26,6 +26,11 @@ export default verifyToken(async (req, res) => {
 
     try {
       const savedPost = await post.save();
+
+      user.meta.posts.push(savedPost._id);
+
+      const savedUser = await user.save();
+
       res.json(savedPost);
     } catch (err) {
       res.status(400).json({ message: err });

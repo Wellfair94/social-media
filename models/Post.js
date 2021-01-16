@@ -2,9 +2,7 @@ import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 import Comment from "@/models/Comment";
 
-const { Schema } = mongoose;
-
-const PostSchema = new Schema({
+const PostSchema = new mongoose.Schema({
   _id: {
     type: String,
     default: uuid,

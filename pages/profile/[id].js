@@ -2,6 +2,8 @@ import Follower from "@/components/Follower";
 import Post from "@/components/Post";
 import { AuthContext } from "@/contexts/AuthContext";
 import Layout from "@/layout";
+import UserCollection from "@/models/User";
+import PostCollection from "@/models/Post";
 import {
   Avatar,
   Box,
@@ -19,14 +21,43 @@ import {
 import Head from "next/head";
 import { useState, useContext } from "react";
 
-const posts = [];
+export async function getServerSideProps({ query }) {
+  const { id } = query;
 
-// export async function getServerSideProps(context) {}
+  const profileData = await UserCollection.findOne({
+    _id: id,
+  });
 
-export default function Profile() {
+  if (!profileData) {
+    return {
+      notFound: true,
+    };
+  }
+  const { _id, username, bio, meta } = profileData;
+  const { posts } = meta;
+
+  const postsData = await PostCollection.find({ _id: { $in: posts } });
+
+  return {
+    props: {
+      profileData: JSON.parse(
+        JSON.stringify({
+          _id: _id,
+          username: username,
+          bio: bio,
+          meta: meta,
+        })
+      ),
+      postsData: JSON.parse(JSON.stringify(postsData)),
+    },
+  };
+}
+
+export default function Profile({ profileData, postsData }) {
   const [tab, setTab] = useState("posts");
   const { session } = useContext(AuthContext);
-  const { _id } = session.user;
+  const { _id, username, bio, meta } = profileData;
+  const { followers, following, posts } = meta;
 
   return (
     <Layout>
@@ -36,31 +67,31 @@ export default function Profile() {
 
       <Stack align="center" borderRadius="md" w="100%">
         <Avatar size="xl" />
-        <Heading>Wellfair94</Heading>
-        <Text>Write something about yourself.</Text>
+        <Heading>{username}</Heading>
+        <Text>{bio}</Text>
         {/* <Editable defaultValue="Take some chakra">
           <EditablePreview _hover={{ cursor: "pointer" }} />
           <EditableInput px={2} />
         </Editable> */}
 
-        <Button>Follow</Button>
+        {!session?.user?._id === _id && <Button>Follow</Button>}
 
         <HStack w="100%" justifyContent="space-evenly">
           <Flex w="33%" justifyContent="center">
             <Button bg="none" onClick={() => setTab("posts")}>
-              1 Post
+              {posts.length} Post{posts.length === 1 ? "" : "s"}
             </Button>
           </Flex>
 
           <Flex w="33%" justifyContent="center">
             <Button bg="none" onClick={() => setTab("followers")}>
-              0 Followers
+              {followers.length} Follower{followers.length === 1 ? "" : "s"}
             </Button>
           </Flex>
 
           <Flex w="33%" justifyContent="center">
             <Button bg="none" onClick={() => setTab("following")}>
-              2 Following
+              {following.length} Following
             </Button>
           </Flex>
         </HStack>
@@ -81,18 +112,16 @@ export default function Profile() {
           {tab === "posts" ? (
             <>
               <Stack w="100%">
-                {posts.map(
-                  ({ id, user, upvotes, comments, downvotes, body }) => (
-                    <Post
-                      key={id}
-                      user={user}
-                      upvotes={upvotes}
-                      comments={comments}
-                      downvotes={downvotes}
-                      body={body}
-                    />
-                  )
-                )}
+                {postsData.map(({ _id, postedBy, createdOn, meta, body }) => (
+                  <Post
+                    key={_id}
+                    _id={_id}
+                    postedBy={postedBy}
+                    createdOn={createdOn}
+                    meta={meta}
+                    body={body}
+                  />
+                ))}
               </Stack>
 
               <Flex justifyContent="center">

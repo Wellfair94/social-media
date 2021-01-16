@@ -1,9 +1,7 @@
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 
-const { Schema } = mongoose;
-
-const UserSchema = new Schema({
+const UserSchema = new mongoose.Schema({
   _id: {
     type: String,
     default: uuid,
@@ -28,10 +26,13 @@ const UserSchema = new Schema({
   },
   createdOn: {
     type: Number,
-    default: Date.now(),
+    default: Date.now,
   },
   avatarUrl: String,
-  bio: String,
+  bio: {
+    type: String,
+    default: "Write something about yourself",
+  },
   meta: {
     followers: [String],
     following: [String],

@@ -13,7 +13,6 @@ import {
   Divider,
   Button,
   Stack,
-  Input,
 } from "@chakra-ui/react";
 import Link from "next/link";
 import { navLinks } from "@/utils/static";
@@ -26,7 +25,7 @@ const Header = () => {
   const router = useRouter();
   const { pathname } = router;
   const { session, logout } = useContext(AuthContext);
-  const { username } = session.user || "";
+  const { _id, username } = session.user || "";
 
   return (
     <>
@@ -69,7 +68,10 @@ const Header = () => {
             <DrawerBody>
               <Stack mt={4}>
                 {navLinks.map(({ name, icon, route }) => (
-                  <Link href={route} key={name}>
+                  <Link
+                    href={`${route === "/profile" ? `profile/${_id}` : route}`}
+                    key={name}
+                  >
                     <Button
                       justifyContent="flex-start"
                       bg="none"

@@ -1,10 +1,7 @@
-import { string } from "@hapi/joi";
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
 
-const { Schema } = mongoose;
-
-const CommentSchema = new Schema({
+const CommentSchema = new mongoose.Schema({
   _id: {
     type: String,
     default: uuid,

@@ -3,5 +3,10 @@
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
   "/feed": "pages/feed.js",
-  "/profile": "pages/profile.js"
+  "/profile/[id]": "pages/profile/[id].js",
+  "/": "pages/index.js",
+  "/api/auth/login": "pages/api/auth/login.js",
+  "/api/posts": "pages/api/posts.js",
+  "/api/posts/[id]": "pages/api/posts/[id].js",
+  "/api/auth/signup": "pages/api/auth/signup.js"
 }
