@@ -18,14 +18,20 @@ import Link from "next/link";
 import { navLinks } from "@/utils/static";
 import { useRouter } from "next/router";
 import { AuthContext } from "@/contexts/AuthContext";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 
 const Header = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const router = useRouter();
-  const { pathname } = router;
+  const { pathname, asPath } = router;
   const { session, logout } = useContext(AuthContext);
   const { _id, username } = session.user || "";
+
+  useEffect(() => {
+    if (asPath === `/profile/${_id}`) {
+      onClose();
+    }
+  }, [asPath, _id]);
 
   return (
     <>
@@ -46,7 +52,7 @@ const Header = () => {
               icon={<HamburgerIcon w="25px" h="25px" color="brand.white" />}
             />
 
-            <Link href="/profile">
+            <Link href={`/profile/${_id}`}>
               <Avatar size="sm" _hover={{ cursor: "pointer" }} />
             </Link>
           </>
@@ -69,13 +75,16 @@ const Header = () => {
               <Stack mt={4}>
                 {navLinks.map(({ name, icon, route }) => (
                   <Link
-                    href={`${route === "/profile" ? `profile/${_id}` : route}`}
+                    href={route === "/profile" ? `${route}/${_id}` : route}
                     key={name}
                   >
                     <Button
                       justifyContent="flex-start"
                       bg="none"
-                      isActive={route === pathname}
+                      isActive={
+                        route === pathname ||
+                        (route === "/profile" && asPath === `/profile/${_id}`)
+                      }
                     >
                       {icon}
                       {name}

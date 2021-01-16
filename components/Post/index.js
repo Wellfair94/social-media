@@ -25,6 +25,7 @@ import Comment from "@/components/Comment";
 import { DateTime } from "luxon";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { sendUpvote, sendComment, sendDownvote, starPost } from "@/lib/post";
+import Link from "next/link";
 
 const Post = ({ _id, postedBy, createdOn, meta, body }) => {
   const [open, setOpen] = useState(false);
@@ -35,6 +36,8 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
     comments: meta.comments,
     downvotes: meta.downvotes.length,
   });
+
+  const profileId = postedBy._id;
 
   const { upvotes, comments, downvotes } = metaData;
 
@@ -89,10 +92,12 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
       color="brand.darkGrey"
     >
       <Flex align="flex-start" justify="space-between">
-        <Flex align="center">
-          <Avatar size="sm" mr={2} />
-          <Heading size="md">{username}</Heading>
-        </Flex>
+        <Link href={`/profile/${profileId}`}>
+          <Flex align="center" _hover={{ cursor: "pointer" }}>
+            <Avatar size="sm" mr={2} />
+            <Heading size="md">{username}</Heading>
+          </Flex>
+        </Link>
 
         <IconButton
           onClick={starPost}
@@ -123,7 +128,9 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
 
         <Stack mt={2}>
           <Flex align="center">
-            <Avatar size="sm" mr={2} />
+            <Link href={`/profile/${profileId}`}>
+              <Avatar size="sm" mr={2} _hover={{ cursor: "pointer" }} />
+            </Link>
             <Box as="form" w="100%" onSubmit={handleSubmit}>
               <InputGroup>
                 <Input

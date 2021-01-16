@@ -20,6 +20,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { useState, useContext } from "react";
+import { followProfile } from "@/lib/profile";
 
 export async function getServerSideProps({ query }) {
   const { id } = query;
@@ -59,6 +60,11 @@ export default function Profile({ profileData, postsData }) {
   const { _id, username, bio, meta } = profileData;
   const { followers, following, posts } = meta;
 
+  const toggleFollow = () => {
+    alert("test");
+    followProfile(_id).then((res) => console.log(res));
+  };
+
   return (
     <Layout>
       <Head>
@@ -69,12 +75,15 @@ export default function Profile({ profileData, postsData }) {
         <Avatar size="xl" />
         <Heading>{username}</Heading>
         <Text>{bio}</Text>
+
         {/* <Editable defaultValue="Take some chakra">
           <EditablePreview _hover={{ cursor: "pointer" }} />
           <EditableInput px={2} />
         </Editable> */}
 
-        {!session?.user?._id === _id && <Button>Follow</Button>}
+        {session?.user?._id === _id ? null : (
+          <Button onClick={toggleFollow}>Follow</Button>
+        )}
 
         <HStack w="100%" justifyContent="space-evenly">
           <Flex w="33%" justifyContent="center">

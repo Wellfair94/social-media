@@ -96,7 +96,6 @@ export default verifyToken(async (req, res) => {
         downvotes: updatedPost.meta.downvotes.length,
       });
     } catch (err) {
-      console.log(err);
       res.status(400).json({ message: err });
     }
   } else {
