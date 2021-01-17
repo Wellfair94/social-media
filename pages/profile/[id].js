@@ -19,8 +19,9 @@ import {
   EditableInput,
 } from "@chakra-ui/react";
 import Head from "next/head";
-import { useState, useContext } from "react";
+import { useState, useEffect, useContext } from "react";
 import { followProfile } from "@/lib/profile";
+import { useRouter } from "next/router";
 
 export async function getServerSideProps({ query }) {
   const { id } = query;
@@ -34,6 +35,7 @@ export async function getServerSideProps({ query }) {
       notFound: true,
     };
   }
+
   const { _id, username, bio, meta } = profileData;
   const { posts, followers, following } = meta;
 
@@ -83,42 +85,39 @@ export default function Profile({
   postsData,
   followersData,
   followingData,
+  test,
 }) {
   const [tab, setTab] = useState("posts");
   const { session } = useContext(AuthContext);
   const userId = session.user?._id;
-  const { _id, username, bio, meta } = profileData;
-  const [metaData, setMetaData] = useState({
-    followers: meta.followers,
-    following: meta.following,
-    posts: meta.posts,
-  });
-  const { followers, following, posts } = metaData;
-  const [isFollowing, setIsFollowing] = useState(() =>
-    followers.includes(userId)
-  );
-  const [updatedFollowersData, setUpdatedFollowersData] = useState(
-    followersData
+  const { _id, username, bio } = profileData;
+  const router = useRouter();
+  const { asPath } = router;
+  const followers = followersData.length;
+  const following = followingData.length;
+  const posts = postsData.length;
+  // Array of IDs for profiles currently logged in user is following.
+  // Updated each time toggleFollow is called
+  const [updatedFollowing, setUpdatedFollowing] = useState(
+    session.meta?.following
   );
 
-  const toggleFollow = () => {
-    followProfile(_id).then(({ followers, newFollower, removedFollower }) => {
-      setIsFollowing(!isFollowing);
+  const isFollowing = followersData.find(({ _id }) => _id === userId);
 
-      if (newFollower) {
-        setUpdatedFollowersData([...updatedFollowersData, newFollower]);
-      } else {
-        const removeFollower = updatedFollowersData.filter(
-          (item) => item === removedFollower._id
-        );
-        setUpdatedFollowersData(removeFollower);
-      }
+  useEffect(() => {
+    setTab("posts");
+  }, [asPath]);
 
-      setMetaData({ ...metaData, followers: followers });
+  const toggleFollow = (profileId) => {
+    followProfile(profileId).then(({ following }) => {
+      setUpdatedFollowing(following);
+      refreshData();
     });
   };
 
-  console.log(updatedFollowersData);
+  const refreshData = () => {
+    router.replace(router.asPath);
+  };
 
   return (
     <Layout>
@@ -136,8 +135,8 @@ export default function Profile({
           <EditableInput px={2} />
         </Editable> */}
 
-        {session?.user?._id === _id ? null : (
-          <Button onClick={toggleFollow}>
+        {userId === _id ? null : (
+          <Button onClick={() => toggleFollow(_id)}>
             {!isFollowing ? "Follow" : "Following"}
           </Button>
         )}
@@ -145,19 +144,19 @@ export default function Profile({
         <HStack w="100%" justifyContent="space-evenly">
           <Flex w="33%" justifyContent="center">
             <Button bg="none" onClick={() => setTab("posts")}>
-              {posts.length} Post{posts.length === 1 ? "" : "s"}
+              {posts} Post{posts === 1 ? "" : "s"}
             </Button>
           </Flex>
 
           <Flex w="33%" justifyContent="center">
             <Button bg="none" onClick={() => setTab("followers")}>
-              {followers.length} Follower{followers.length === 1 ? "" : "s"}
+              {followers} Follower{followers === 1 ? "" : "s"}
             </Button>
           </Flex>
 
           <Flex w="33%" justifyContent="center">
             <Button bg="none" onClick={() => setTab("following")}>
-              {following.length} Following
+              {following} Following
             </Button>
           </Flex>
         </HStack>
@@ -197,12 +196,14 @@ export default function Profile({
           ) : tab === "followers" ? (
             <>
               <Stack>
-                {updatedFollowersData.map(({ _id, username, avatarUrl }) => (
+                {followersData.map(({ _id, username, avatarUrl }) => (
                   <Follower
                     key={_id}
-                    id={_id}
+                    _id={_id}
                     username={username}
                     avatarUrl={avatarUrl}
+                    toggleFollow={toggleFollow}
+                    updatedFollowing={updatedFollowing}
                   />
                 ))}
               </Stack>
@@ -217,9 +218,11 @@ export default function Profile({
                 {followingData.map(({ _id, username, avatarUrl }) => (
                   <Follower
                     key={_id}
-                    id={_id}
+                    _id={_id}
                     username={username}
                     avatarUrl={avatarUrl}
+                    toggleFollow={toggleFollow}
+                    updatedFollowing={updatedFollowing}
                   />
                 ))}
               </Stack>

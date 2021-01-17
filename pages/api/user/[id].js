@@ -41,25 +41,13 @@ export default verifyToken(async (req, res) => {
       const updatedProfile = await profile.save();
       const updatedUser = await user.save();
 
-      const { _id, username, avatarUrl } = updatedUser;
-
-      if (updatedProfile.meta.followers.includes(_id)) {
-        res.send({
-          followers: updatedProfile.meta.followers,
-          newFollower: {
-            _id: _id,
-            username: username,
-            avatarUrl: avatarUrl,
-          },
-        });
-      } else {
-        res.send({
-          followers: updatedProfile.meta.followers,
-          removedFollower: {
-            _id: _id,
-          },
-        });
-      }
+      // Return updated arrays of followers/following IDs
+      // Followers - the updated list of IDs of the current profile
+      // Following - the updated list of IDs of the currently logged in user
+      res.send({
+        followers: updatedProfile.meta.followers,
+        following: updatedUser.meta.following,
+      });
     } catch (err) {
       res.status(400).json({ message: err });
     }

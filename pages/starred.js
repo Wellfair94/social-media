@@ -4,75 +4,25 @@ import { StarIcon } from "@chakra-ui/icons";
 import { Heading, Divider, Stack, Button, Flex } from "@chakra-ui/react";
 import Head from "next/head";
 
-const posts = [
-  {
-    id: 1,
-    user: {
-      id: 1,
-      email: "freddie.wellfair@gmail.com",
-      username: "Wellfair94",
-      avatarUrl: "",
-    },
-    upvotes: 12,
-    comments: [
-      {
-        id: 1,
-        createdOn: "timestamp",
-        user: {
-          id: 1,
-          email: "freddie.wellfair@gmail.com",
-          username: "Wellfair94",
-          avatarUrl: "",
-        },
-        body: "I love React, Chakra UI and Next.js",
-      },
-      {
-        id: 2,
-        createdOn: "timestamp",
-        user: {
-          id: 1,
-          email: "freddie.wellfair@gmail.com",
-          username: "Wellfair94",
-          avatarUrl: "",
-        },
-        body: "I love React!",
-      },
-    ],
-    downvotes: 5,
-    body: "This is a post by Freddie",
-    createdOn: "timestamp",
-    starredBy: [],
-  },
-  {
-    id: 2,
-    user: {
-      id: 2,
-      email: "toby.wellfair@gmail.com",
-      username: "TobyWellfair",
-      avatarUrl: "",
-    },
-    upvotes: 10,
-    comments: [
-      {
-        id: 1,
-        createdOn: "timestamp",
-        user: {
-          id: 1,
-          email: "freddie.wellfair@gmail.com",
-          username: "Wellfair94",
-          avatarUrl: "",
-        },
-        body: "I love React, Chakra UI and Next.js",
-      },
-    ],
-    downvotes: 2,
-    body: "This is a post by Toby",
-    createdOn: "timestamp",
-    starredBy: [],
-  },
-];
+export async function getServerSideProps() {
+  const starred = [];
 
-export default function Starred() {
+  const posts = await PostCollection.find({ _id: { $in: starred } });
+
+  if (!posts) {
+    return {
+      notFound: true,
+    };
+  }
+
+  return {
+    props: {
+      postsData: JSON.parse(JSON.stringify(posts)).reverse(),
+    },
+  };
+}
+
+export default function Starred({ postsData }) {
   return (
     <Layout>
       <Head>
@@ -87,15 +37,8 @@ export default function Starred() {
       <Divider my={5} />
 
       <Stack w="100%">
-        {posts.map(({ id, user, upvotes, comments, downvotes, body }) => (
-          <Post
-            key={id}
-            user={user}
-            upvotes={upvotes}
-            comments={comments}
-            downvotes={downvotes}
-            body={body}
-          />
+        {postsData.map(({ id, user, meta, body }) => (
+          <Post key={id} user={user} meta={meta} body={body} />
         ))}
       </Stack>
       <Button mt={5}>Show more</Button>

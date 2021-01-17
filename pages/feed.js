@@ -21,6 +21,7 @@ import PostCollection from "@/models/Post";
 import { AuthContext } from "@/contexts/AuthContext";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { sendPost } from "@/lib/feed";
+import Link from "next/link";
 
 export async function getServerSideProps() {
   const posts = await PostCollection.find({});
@@ -43,7 +44,7 @@ export default function Feed({ postsData }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const { session } = useContext(AuthContext);
-  const { username } = session.user || "";
+  const { _id, username } = session.user || "";
 
   const createPost = async (e) => {
     e.preventDefault();
@@ -86,7 +87,10 @@ export default function Feed({ postsData }) {
 
       <Box w="100%">
         <Flex align="center">
-          <Avatar size="md" mr={2} />
+          <Link href={`/profile/${_id}`}>
+            <Avatar size="md" mr={2} _hover={{ cursor: "pointer" }} />
+          </Link>
+
           <Box as="form" onSubmit={createPost} w="100%">
             <InputGroup>
               <Input
