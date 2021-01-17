@@ -2,8 +2,6 @@
   "/_app": "pages/_app.js",
   "/_error": "pages/_error.js",
   "/_document": "pages/_document.js",
-  "/profile/[id]": "pages/profile/[id].js",
-  "/api/user/[id]": "pages/api/user/[id].js",
-  "/": "pages/index.js",
-  "/feed": "pages/feed.js"
+  "/feed": "pages/feed.js",
+  "/profile/[id]": "pages/profile/[id].js"
 }

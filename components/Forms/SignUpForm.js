@@ -6,19 +6,27 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
+import { AuthContext } from "@/contexts/AuthContext";
+import { useContext, useState } from "react";
 
 const SignUpForm = () => {
-  const handleSubmit = (values, actions) => {
-    setTimeout(() => {
-      alert(JSON.stringify(values, null, 2));
-      actions.setSubmitting(false);
-    }, 1000);
-  };
+  const { signUp } = useContext(AuthContext);
+  const [success, setSuccess] = useState(false);
+
+  console.log(success);
 
   return (
     <Formik
       initialValues={{ email: "", username: "", password: "" }}
-      onSubmit={handleSubmit}
+      onSubmit={(values, { setSubmitting }) => {
+        signUp(
+          values.email,
+          values.username,
+          values.password,
+          setSubmitting,
+          setSuccess
+        );
+      }}
     >
       {({ isSubmitting }) => (
         <Form>
@@ -63,6 +71,7 @@ const SignUpForm = () => {
                     bg="white"
                     variant="outline"
                     placeholder="Password"
+                    type="password"
                   />
                   <FormErrorMessage>{form.errors.name}</FormErrorMessage>
                 </FormControl>

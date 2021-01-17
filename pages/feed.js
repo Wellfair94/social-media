@@ -129,7 +129,7 @@ export default function Feed({ postsData }) {
           />
         ))}
       </Stack>
-      <Button mt={5}>Show more</Button>
+      {/* <Button mt={5}>Show more</Button> */}
     </Layout>
   );
 }

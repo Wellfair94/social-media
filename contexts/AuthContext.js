@@ -36,6 +36,37 @@ const AuthProvider = ({ children }) => {
       );
   };
 
+  const signUp = async (
+    email,
+    username,
+    password,
+    setSubmitting,
+    setSuccess
+  ) => {
+    fetch("/api/auth/signup", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        email: email,
+        username: username,
+        password: password,
+      }),
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setSubmitting(false);
+        setSuccess(true);
+      })
+      .catch((err) =>
+        setTimeout(() => {
+          setSubmitting(false);
+          console.log(err);
+        })
+      );
+  };
+
   const logout = () => {
     setSession({
       isLoggedIn: false,
@@ -77,7 +108,9 @@ const AuthProvider = ({ children }) => {
   console.log(session);
 
   return (
-    <AuthContext.Provider value={{ session, login, logout, refreshFollowing }}>
+    <AuthContext.Provider
+      value={{ session, login, logout, signUp, refreshFollowing }}
+    >
       {children}
     </AuthContext.Provider>
   );

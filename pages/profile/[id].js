@@ -187,9 +187,9 @@ export default function Profile({
                 ))}
               </Stack>
 
-              <Flex justifyContent="center">
+              {/* <Flex justifyContent="center">
                 <Button mt={5}>Show more</Button>
-              </Flex>
+              </Flex> */}
             </>
           ) : tab === "followers" ? (
             <>
@@ -204,10 +204,10 @@ export default function Profile({
                   />
                 ))}
               </Stack>
-
+              {/* 
               <Flex justifyContent="center">
                 <Button mt={5}>Show more</Button>
-              </Flex>
+              </Flex> */}
             </>
           ) : (
             <>
@@ -223,9 +223,9 @@ export default function Profile({
                 ))}
               </Stack>
 
-              <Flex justifyContent="center">
+              {/* <Flex justifyContent="center">
                 <Button mt={5}>Show more</Button>
-              </Flex>
+              </Flex> */}
             </>
           )}
         </Box>
