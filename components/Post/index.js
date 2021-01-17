@@ -98,14 +98,6 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
             <Heading size="md">{username}</Heading>
           </Flex>
         </Link>
-
-        <IconButton
-          onClick={starPost}
-          bg="none"
-          size="sm"
-          aria-label="Star"
-          icon={<StarIcon />}
-        />
       </Flex>
       <Text fontSize="lg">{body}</Text>
 

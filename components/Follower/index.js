@@ -1,24 +1,20 @@
 import { AuthContext } from "@/contexts/AuthContext";
-import { Flex, Avatar, Heading, Button } from "@chakra-ui/react";
+import { Flex, Avatar, Heading, Button, Box } from "@chakra-ui/react";
 import Link from "next/link";
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 
-const Follower = ({
-  _id,
-  username,
-  avatarUrl,
-  toggleFollow,
-  updatedFollowing,
-}) => {
+const Follower = ({ _id, username, avatarUrl, toggleFollow }) => {
   const { session } = useContext(AuthContext);
   const userId = session.user?._id;
 
-  console.log(updatedFollowing);
+  const following = session.user.meta.following;
 
-  const isFollowing = updatedFollowing.includes(_id);
+  const isFollowing = following?.includes(_id);
+  // const isFollowing = true;
 
   return (
     <Flex
+      h={userId === _id && "56px"}
       w="100%"
       bg="white"
       borderRadius="md"
@@ -39,9 +35,11 @@ const Follower = ({
         </Link>
       </Flex>
 
-      <Button disabled={userId === _id} onClick={() => toggleFollow(_id)}>
-        {isFollowing ? "Following" : "Follow"}
-      </Button>
+      {userId === _id ? null : (
+        <Button disabled={userId === _id} onClick={() => toggleFollow(_id)}>
+          {isFollowing ? "Following" : "Follow"}
+        </Button>
+      )}
     </Flex>
   );
 };

@@ -23,11 +23,11 @@ export const navLinks = [
     icon: <Avatar w="16px" h="16px" bg="brand.darkGrey" mr={2} />,
     route: "/profile",
   },
-  {
-    name: "Starred",
-    icon: <StarIcon mr={2} />,
-    route: "/starred",
-  },
+  // {
+  //   name: "Starred",
+  //   icon: <StarIcon mr={2} />,
+  //   route: "/starred",
+  // },
   {
     name: "Settings",
     icon: <SettingsIcon mr={2} />,

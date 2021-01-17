@@ -52,8 +52,32 @@ const AuthProvider = ({ children }) => {
     }
   }, [pathname]);
 
+  const refreshFollowing = (data) => {
+    const { isLoggedIn, user } = session;
+    const { meta } = user;
+
+    const updatedMeta = {
+      ...meta,
+      following: data,
+    };
+
+    const updatedSession = {
+      isLoggedIn: isLoggedIn,
+      user: {
+        ...user,
+        meta: {
+          ...updatedMeta,
+        },
+      },
+    };
+
+    setSession({ ...updatedSession });
+  };
+
+  console.log(session);
+
   return (
-    <AuthContext.Provider value={{ session, login, logout }}>
+    <AuthContext.Provider value={{ session, login, logout, refreshFollowing }}>
       {children}
     </AuthContext.Provider>
   );

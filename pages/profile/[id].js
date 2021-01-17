@@ -85,10 +85,9 @@ export default function Profile({
   postsData,
   followersData,
   followingData,
-  test,
 }) {
   const [tab, setTab] = useState("posts");
-  const { session } = useContext(AuthContext);
+  const { session, refreshFollowing } = useContext(AuthContext);
   const userId = session.user?._id;
   const { _id, username, bio } = profileData;
   const router = useRouter();
@@ -96,11 +95,6 @@ export default function Profile({
   const followers = followersData.length;
   const following = followingData.length;
   const posts = postsData.length;
-  // Array of IDs for profiles currently logged in user is following.
-  // Updated each time toggleFollow is called
-  const [updatedFollowing, setUpdatedFollowing] = useState(
-    session.meta?.following
-  );
 
   const isFollowing = followersData.find(({ _id }) => _id === userId);
 
@@ -109,8 +103,12 @@ export default function Profile({
   }, [asPath]);
 
   const toggleFollow = (profileId) => {
-    followProfile(profileId).then(({ following }) => {
-      setUpdatedFollowing(following);
+    followProfile(profileId).then((res) => {
+      if (res?.following) {
+        console.log(res.following);
+        refreshFollowing(res.following);
+      }
+
       refreshData();
     });
   };
@@ -203,7 +201,6 @@ export default function Profile({
                     username={username}
                     avatarUrl={avatarUrl}
                     toggleFollow={toggleFollow}
-                    updatedFollowing={updatedFollowing}
                   />
                 ))}
               </Stack>
@@ -222,7 +219,6 @@ export default function Profile({
                     username={username}
                     avatarUrl={avatarUrl}
                     toggleFollow={toggleFollow}
-                    updatedFollowing={updatedFollowing}
                   />
                 ))}
               </Stack>
