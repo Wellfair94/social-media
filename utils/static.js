@@ -1,4 +1,4 @@
-import { CalendarIcon, StarIcon, SettingsIcon } from "@chakra-ui/icons";
+import { CalendarIcon, ChatIcon, SettingsIcon } from "@chakra-ui/icons";
 import { Avatar } from "@chakra-ui/react";
 
 export const applicationRoles = [
@@ -23,11 +23,11 @@ export const navLinks = [
     icon: <Avatar w="16px" h="16px" bg="brand.darkGrey" mr={2} />,
     route: "/profile",
   },
-  // {
-  //   name: "Starred",
-  //   icon: <StarIcon mr={2} />,
-  //   route: "/starred",
-  // },
+  {
+    name: "Messenger",
+    icon: <ChatIcon mr={2} />,
+    route: "/messenger",
+  },
   {
     name: "Settings",
     icon: <SettingsIcon mr={2} />,

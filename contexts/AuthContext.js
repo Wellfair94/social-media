@@ -105,8 +105,6 @@ const AuthProvider = ({ children }) => {
     setSession({ ...updatedSession });
   };
 
-  console.log(session);
-
   return (
     <AuthContext.Provider
       value={{ session, login, logout, signUp, refreshFollowing }}

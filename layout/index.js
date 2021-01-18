@@ -6,7 +6,7 @@ const Layout = ({ children }) => {
   return (
     <Box w="100%" minH="100vh" bg="brand.white">
       <Header isLoggedIn={false} />
-      <Container centerContent w="100%" py={5}>
+      <Container centerContent w="100%" minH="100%" py={5}>
         {children}
       </Container>
     </Box>

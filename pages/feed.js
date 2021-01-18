@@ -96,7 +96,7 @@ export default function Feed({ postsData }) {
               <Input
                 variant="outline"
                 bg="white"
-                placeholder={`Whats on your mind, ${username}?`}
+                placeholder="What's on your mind?"
                 onChange={(e) => setInput(e.target.value)}
                 value={input}
               />

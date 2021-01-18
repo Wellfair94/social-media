@@ -10,7 +10,6 @@ const Follower = ({ _id, username, avatarUrl, toggleFollow }) => {
   const following = session.user.meta.following;
 
   const isFollowing = following?.includes(_id);
-  // const isFollowing = true;
 
   return (
     <Flex

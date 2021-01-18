@@ -24,10 +24,10 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
-    "/feed": [
+    "/messenger": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/feed.js"
+      "static/chunks/pages/messenger.js"
     ],
     "/profile/[id]": [
       "static/chunks/main.js",

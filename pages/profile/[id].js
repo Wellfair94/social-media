@@ -105,7 +105,6 @@ export default function Profile({
   const toggleFollow = (profileId) => {
     followProfile(profileId).then((res) => {
       if (res?.following) {
-        console.log(res.following);
         refreshFollowing(res.following);
       }
 
