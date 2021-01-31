@@ -1,6 +1,6 @@
 // .gitignore
 # next.js build output
-.next
+.next/*
 
 # next config with env
 next.config.js
