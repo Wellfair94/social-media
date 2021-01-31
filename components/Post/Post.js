@@ -24,7 +24,7 @@ import { useState } from "react";
 import Comment from "components/Comment";
 import { DateTime } from "luxon";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { sendUpvote, sendComment, sendDownvote } from "lib/post";
+import { sendUpvote, sendComment, sendDownvote, updatePost } from "lib/post";
 import Link from "next/link";
 
 const Post = ({ _id, postedBy, createdOn, meta, body }) => {
@@ -38,7 +38,6 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
   });
 
   const { upvotes, comments, downvotes } = metaData;
-
   const { username, avatarUrl } = postedBy;
 
   const formatted = DateTime.fromMillis(createdOn).toLocaleString(
@@ -64,11 +63,11 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
   };
 
   const upvotePost = () => {
-    sendUpvote(_id).then((res) => setMetaData(res));
+    updatePost("upvote", _id).then((res) => setMetaData(res));
   };
 
   const commentPost = () => {
-    sendComment(_id, input).then((res) => {
+    updatePost("comment", _id, input).then((res) => {
       setMetaData(res);
       setInput("");
       setOpen(true);
@@ -76,7 +75,7 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
   };
 
   const downvotePost = () => {
-    sendDownvote(_id).then((res) => setMetaData(res));
+    updatePost("downvote", _id).then((res) => setMetaData(res));
   };
 
   return (

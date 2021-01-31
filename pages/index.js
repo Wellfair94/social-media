@@ -20,7 +20,7 @@ import { useState, useContext } from "react";
 import PostCollection from "models/Post";
 import { AuthContext } from "contexts/AuthContext";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { sendPost } from "lib/feed";
+import { sendPost } from "lib/post";
 import Link from "next/link";
 import { useRefreshServerSideProps } from "hooks/useRefreshServerSideProps";
 
