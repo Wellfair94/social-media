@@ -1,4 +1,4 @@
-import Layout from "@/layout";
+import Layout from "layout";
 import { SettingsIcon } from "@chakra-ui/icons";
 import { Flex, Heading, Divider, Stack } from "@chakra-ui/react";
 import Head from "next/head";

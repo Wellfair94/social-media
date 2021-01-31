@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { v4 as uuid } from "uuid";
-import Comment from "@/models/Comment";
+import Comment from "models/Comment";
 
 const PostSchema = new mongoose.Schema({
   _id: {

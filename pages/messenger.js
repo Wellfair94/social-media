@@ -1,6 +1,6 @@
-import Chat from "@/components/Chat";
-import Message from "@/components/Message";
-import Layout from "@/layout";
+import Chat from "components/Chat";
+import Message from "components/Message";
+import Layout from "layout";
 import { ChatIcon } from "@chakra-ui/icons";
 import {
   Flex,

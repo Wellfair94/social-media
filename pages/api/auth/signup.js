@@ -1,5 +1,5 @@
-import User from "@/models/User";
-import dbConnect from "@/utils/dbConnect";
+import User from "models/User";
+import dbConnect from "utils/dbConnect";
 import Joi from "@hapi/joi";
 import bycrypt from "bcrypt";
 

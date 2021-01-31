@@ -34,6 +34,11 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/login.js"
     ],
+    "/messenger": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/messenger.js"
+    ],
     "/next/dist/pages/_error": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
@@ -43,6 +48,11 @@
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/profile/[username].js"
+    ],
+    "/settings": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/settings.js"
     ]
   },
   "ampFirstPages": []

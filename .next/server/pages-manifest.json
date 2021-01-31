@@ -4,7 +4,9 @@
   "/_document": "pages/_document.js",
   "/login": "pages/login.js",
   "/": "pages/index.js",
-  "/api/auth/login": "pages/api/auth/login.js",
+  "/profile/[username]": "pages/profile/[username].js",
   "/next/dist/pages/_error": "pages/next/dist/pages/_error.js",
-  "/profile/[username]": "pages/profile/[username].js"
+  "/api/auth/login": "pages/api/auth/login.js",
+  "/messenger": "pages/messenger.js",
+  "/settings": "pages/settings.js"
 }

@@ -1,3 +1,3 @@
-import Follower from "@/components/Follower/Follower";
+import Follower from "components/Follower/Follower";
 
 export default Follower;

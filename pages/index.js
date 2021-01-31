@@ -1,5 +1,5 @@
 import Head from "next/head";
-import Layout from "@/layout";
+import Layout from "layout";
 import {
   Input,
   Stack,
@@ -15,12 +15,12 @@ import {
   Circle,
   HStack,
 } from "@chakra-ui/react";
-import Post from "@/components/Post";
+import Post from "components/Post";
 import { useState, useContext } from "react";
-import PostCollection from "@/models/Post";
-import { AuthContext } from "@/contexts/AuthContext";
+import PostCollection from "models/Post";
+import { AuthContext } from "contexts/AuthContext";
 import { RiSendPlaneFill } from "react-icons/ri";
-import { sendPost } from "@/lib/feed";
+import { sendPost } from "lib/feed";
 import Link from "next/link";
 import { useRefreshServerSideProps } from "hooks/useRefreshServerSideProps";
 

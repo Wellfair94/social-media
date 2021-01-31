@@ -16,9 +16,9 @@ import {
   Input,
 } from "@chakra-ui/react";
 import Link from "next/link";
-import { navLinks } from "@/utils/static";
+import { navLinks } from "utils/static";
 import { useRouter } from "next/router";
-import { AuthContext } from "@/contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import { useContext, useEffect } from "react";
 
 const Header = () => {

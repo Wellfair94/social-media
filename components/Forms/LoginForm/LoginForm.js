@@ -8,7 +8,7 @@ import {
   Flex,
   Divider,
 } from "@chakra-ui/react";
-import { AuthContext } from "@/contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import { useContext } from "react";
 
 const LoginForm = ({ onOpen }) => {

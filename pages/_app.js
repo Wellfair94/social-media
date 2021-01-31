@@ -1,7 +1,7 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import AuthProvider from "@/contexts/AuthContext";
+import AuthProvider from "contexts/AuthContext";
 import { Router } from "next/router";
-import theme from "theme/";
+import theme from "theme";
 
 Router.events.on("routeChangeStart", () => {
   console.log("Start");

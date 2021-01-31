@@ -1,4 +1,4 @@
-import Layout from "@/layout";
+import Layout from "layout";
 import {
   Flex,
   Modal,
@@ -9,8 +9,8 @@ import {
   ModalCloseButton,
   useDisclosure,
 } from "@chakra-ui/react";
-import LoginForm from "@/components/Forms/LoginForm";
-import SignUpForm from "@/components/Forms/SignUpForm";
+import LoginForm from "components/Forms/LoginForm";
+import SignUpForm from "components/Forms/SignUpForm";
 
 export default function Login() {
   const { isOpen, onOpen, onClose } = useDisclosure();

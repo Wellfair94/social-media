@@ -73,7 +73,7 @@ const AuthProvider = ({ children }) => {
       user: null,
     });
 
-    router.push("/");
+    router.push("/login");
     localStorage.setItem("token", "");
   };
 

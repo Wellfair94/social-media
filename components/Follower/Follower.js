@@ -1,4 +1,4 @@
-import { AuthContext } from "@/contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import { Flex, Avatar, Heading, Button, Box } from "@chakra-ui/react";
 import Link from "next/link";
 import { useContext, useState, useEffect } from "react";

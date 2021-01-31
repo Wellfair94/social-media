@@ -1,9 +1,9 @@
-import Follower from "@/components/Follower";
-import Post from "@/components/Post";
-import { AuthContext } from "@/contexts/AuthContext";
-import Layout from "@/layout";
-import UserCollection from "@/models/User";
-import PostCollection from "@/models/Post";
+import Follower from "components/Follower";
+import Post from "components/Post";
+import { AuthContext } from "contexts/AuthContext";
+import Layout from "layout";
+import UserCollection from "models/User";
+import PostCollection from "models/Post";
 import {
   Avatar,
   Box,
@@ -20,7 +20,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import { useState, useEffect, useContext } from "react";
-import { followProfile } from "@/lib/profile";
+import { followProfile } from "lib/profile";
 import { useRouter } from "next/router";
 
 export async function getServerSideProps({ query }) {

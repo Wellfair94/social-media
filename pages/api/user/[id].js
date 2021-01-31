@@ -1,6 +1,6 @@
-import User from "@/models/User";
-import verifyToken from "@/pages/api/auth/verifyToken";
-import dbConnect from "@/utils/dbConnect";
+import User from "models/User";
+import verifyToken from "pages/api/auth/verifyToken";
+import dbConnect from "utils/dbConnect";
 import jwt from "jsonwebtoken";
 
 dbConnect();

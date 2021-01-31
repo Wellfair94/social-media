@@ -2,15 +2,15 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["components/*"],
-      "@/layout/*": ["layout/*"],
-      "@/models/*": ["models/*"],
-      "@/utils/*": ["utils/*"],
-      "@/lib/*": ["lib/*"],
-      "@/contexts/*": ["contexts/*"],
-      "@/pages/*": ["pages/*"],
-      "@/hooks/*": ["hooks/*"],
-      "@/theme/*": ["theme/*"]
+      // "@/components/*": ["components/*"],
+      // "@/layout/*": ["layout/*"],
+      // "@/models/*": ["models/*"],
+      // "@/utils/*": ["utils/*"],
+      // "@/lib/*": ["lib/*"],
+      // "@/contexts/*": ["contexts/*"],
+      // "@/pages/*": ["pages/*"],
+      // "@/hooks/*": ["hooks/*"],
+      // "@/theme/*": ["theme/*"]
     }
   }
 }

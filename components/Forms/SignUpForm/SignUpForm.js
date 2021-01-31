@@ -6,7 +6,7 @@ import {
   Button,
   Input,
 } from "@chakra-ui/react";
-import { AuthContext } from "@/contexts/AuthContext";
+import { AuthContext } from "contexts/AuthContext";
 import { useContext, useState } from "react";
 
 const SignUpForm = () => {

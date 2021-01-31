@@ -1,6 +1,6 @@
-import dbConnect from "@/utils/dbConnect";
+import dbConnect from "utils/dbConnect";
 import Joi from "@hapi/joi";
-import User from "@/models/User";
+import User from "models/User";
 import bycrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
