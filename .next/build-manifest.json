@@ -14,6 +14,11 @@
     "static/development/_ssgManifest.js"
   ],
   "pages": {
+    "/": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/index.js"
+    ],
     "/_app": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
@@ -24,15 +29,30 @@
       "static/chunks/webpack.js",
       "static/chunks/pages/_error.js"
     ],
+    "/login": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/login.js"
+    ],
     "/messenger": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
       "static/chunks/pages/messenger.js"
     ],
-    "/profile/[id]": [
+    "/next/dist/pages/_error": [
       "static/chunks/main.js",
       "static/chunks/webpack.js",
-      "static/chunks/pages/profile/[id].js"
+      "static/chunks/pages/next/dist/pages/_error.js"
+    ],
+    "/profile/[username]": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/profile/[username].js"
+    ],
+    "/settings": [
+      "static/chunks/main.js",
+      "static/chunks/webpack.js",
+      "static/chunks/pages/settings.js"
     ]
   },
   "ampFirstPages": []

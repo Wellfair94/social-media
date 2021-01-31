@@ -16,7 +16,7 @@ export const navLinks = [
   {
     name: "Feed",
     icon: <CalendarIcon mr={2} />,
-    route: "/feed",
+    route: "/",
   },
   {
     name: "Profile",
