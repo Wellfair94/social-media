@@ -1,14 +1,18 @@
 import { ChakraProvider } from "@chakra-ui/react";
-import { extendTheme } from "@chakra-ui/react";
 import AuthProvider from "@/contexts/AuthContext";
+import { Router } from "next/router";
+import theme from "theme/";
 
-const theme = extendTheme({
-  colors: {
-    brand: {
-      white: "#fafafa",
-      darkGrey: "#171717",
-    },
-  },
+Router.events.on("routeChangeStart", () => {
+  console.log("Start");
+});
+
+Router.events.on("routeChangeComplete", () => {
+  console.log("Complete");
+});
+
+Router.events.on("routeChangeError", () => {
+  console.log("Error");
 });
 
 export default function App({ Component, pageProps }) {

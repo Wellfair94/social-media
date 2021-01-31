@@ -22,6 +22,7 @@ import { AuthContext } from "@/contexts/AuthContext";
 import { RiSendPlaneFill } from "react-icons/ri";
 import { sendPost } from "@/lib/feed";
 import Link from "next/link";
+import { useRefreshServerSideProps } from "hooks/useRefreshServerSideProps";
 
 export async function getServerSideProps() {
   const posts = await PostCollection.find({});
@@ -55,10 +56,7 @@ export default function Feed({ postsData }) {
 
     setLoading(true);
 
-    sendPost(input).then((res) => {
-      setPosts([res, ...posts]);
-      setInput("");
-    });
+    sendPost(input).then(() => setInput(""));
 
     setLoading(false);
   };

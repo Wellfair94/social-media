@@ -23,11 +23,11 @@ const Follower = ({ _id, username, avatarUrl, toggleFollow }) => {
       boxShadow="sm"
     >
       <Flex align="center">
-        <Link href={`/profile/${_id}`}>
+        <Link href={`/profile/${username}`}>
           <Avatar size="sm" mr={2} _hover={{ cursor: "pointer" }} />
         </Link>
 
-        <Link href={`/profile/${_id}`}>
+        <Link href={`/profile/${username}`}>
           <Heading fontSize="lg" _hover={{ cursor: "pointer" }}>
             {username}
           </Heading>

@@ -37,8 +37,6 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
     downvotes: meta.downvotes.length,
   });
 
-  const profileId = postedBy._id;
-
   const { upvotes, comments, downvotes } = metaData;
 
   const { username, avatarUrl } = postedBy;
@@ -92,7 +90,7 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
       color="brand.darkGrey"
     >
       <Flex align="flex-start" justify="space-between">
-        <Link href={`/profile/${profileId}`}>
+        <Link href={`/profile/${username}`}>
           <Flex align="center" _hover={{ cursor: "pointer" }}>
             <Avatar size="sm" mr={2} />
             <Heading size="md">{username}</Heading>
@@ -120,7 +118,7 @@ const Post = ({ _id, postedBy, createdOn, meta, body }) => {
 
         <Stack mt={2}>
           <Flex align="center">
-            <Link href={`/profile/${profileId}`}>
+            <Link href={`/profile/${username}`}>
               <Avatar size="sm" mr={2} _hover={{ cursor: "pointer" }} />
             </Link>
             <Box as="form" w="100%" onSubmit={handleSubmit}>
