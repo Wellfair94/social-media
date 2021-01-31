@@ -2,17 +2,21 @@ import { ChakraProvider } from "@chakra-ui/react";
 import AuthProvider from "contexts/AuthContext";
 import { Router } from "next/router";
 import theme from "theme";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+
+NProgress.configure({ showSpinner: false });
 
 Router.events.on("routeChangeStart", () => {
-  console.log("Start");
+  NProgress.start();
 });
 
 Router.events.on("routeChangeComplete", () => {
-  console.log("Complete");
+  NProgress.done();
 });
 
 Router.events.on("routeChangeError", () => {
-  console.log("Error");
+  NProgress.done();
 });
 
 export default function App({ Component, pageProps }) {
