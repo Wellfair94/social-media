@@ -13,7 +13,7 @@ import {
 
 const Chat = ({ setToggleChat }) => {
   return (
-    <Stack w="100%" bg="white" p={3}>
+    <Stack w="100%" h="100%" p={3}>
       <HStack w="100%">
         <IconButton
           bg="none"
@@ -21,14 +21,14 @@ const Chat = ({ setToggleChat }) => {
           mr={2}
           icon={<ArrowBackIcon />}
         />
-
         <Flex justifyContent="center" align="center">
           <Avatar size="md" mr={2} />
           <Heading fontSize="xl">Wellfair94</Heading>
         </Flex>
       </HStack>
       <Divider />
-      <Stack w="100%" bg="tomato" h="200px"></Stack>
+      <Stack w="100%" h="100%"></Stack>
+      <Divider mb={2} />
       <Input />
     </Stack>
   );
