@@ -50,9 +50,7 @@ export default function Feed({ posts }) {
   const createPost = async (e) => {
     e.preventDefault();
 
-    if (input === "") {
-      return;
-    }
+    if (input === "") return;
 
     setLoading(true);
 
