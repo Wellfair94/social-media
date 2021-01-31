@@ -35,17 +35,17 @@ export async function getServerSideProps() {
 
   return {
     props: {
-      postsData: JSON.parse(JSON.stringify(posts)).reverse(),
+      posts: JSON.parse(JSON.stringify(posts)).reverse(),
     },
   };
 }
 
-export default function Feed({ postsData }) {
-  const [posts, setPosts] = useState(postsData);
+export default function Feed({ posts }) {
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const { session } = useContext(AuthContext);
-  const { _id, username } = session.user || "";
+  const { username } = session.user || "";
+  const { refreshServerSideProps } = useRefreshServerSideProps();
 
   const createPost = async (e) => {
     e.preventDefault();
@@ -56,7 +56,10 @@ export default function Feed({ postsData }) {
 
     setLoading(true);
 
-    sendPost(input).then(() => setInput(""));
+    sendPost(input).then(() => {
+      setInput("");
+      refreshServerSideProps();
+    });
 
     setLoading(false);
   };
@@ -85,7 +88,7 @@ export default function Feed({ postsData }) {
 
       <Box w="100%">
         <Flex align="center">
-          <Link href={`/profile/${_id}`}>
+          <Link href={`/profile/${username}`}>
             <Avatar size="md" mr={2} _hover={{ cursor: "pointer" }} />
           </Link>
 
