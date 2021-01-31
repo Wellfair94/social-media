@@ -45,7 +45,7 @@ const Header = () => {
         ) : null}
       </Flex>
 
-      <Navbar isOpen={isOpen} onOpen={onOpen} onClose={onClose} />
+      <Navbar isOpen={isOpen} onClose={onClose} />
     </>
   );
 };
